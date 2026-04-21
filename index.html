@@ -266,8 +266,29 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 
 /* ── BLOQUES TEMÁTICOS ── */
 .bloques-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
   margin-top: 2rem;
+}
+/* Row 1: 6 cards × 2 cols each = 12 */
+.bloque-card { grid-column: span 2; }
+/* Row 2: 5 cards centered — start at col 2 so offset = 1 col on each side */
+.bloque-card:nth-child(7)  { grid-column: 2 / span 2; }
+.bloque-card:nth-child(8)  { grid-column: span 2; }
+.bloque-card:nth-child(9)  { grid-column: span 2; }
+.bloque-card:nth-child(10) { grid-column: span 2; }
+.bloque-card:nth-child(11) { grid-column: span 2; }
+
+@media(max-width:900px){
+  .bloques-grid { grid-template-columns: repeat(6,1fr) }
+  .bloque-card  { grid-column: span 2 }
+  .bloque-card:nth-child(7)  { grid-column: 1 / span 2 }
+}
+@media(max-width:580px){
+  .bloques-grid { grid-template-columns: repeat(2,1fr) }
+  .bloque-card  { grid-column: span 1 }
+  .bloque-card:nth-child(7)  { grid-column: span 1 }
 }
 .bloque-card {
   border-radius: var(--r); padding: 1.4rem 1rem; text-align:center;
@@ -646,8 +667,8 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
       <div class="bloque-card b-pediatria reveal">👶 Pediatría</div>
       <div class="bloque-card b-msk reveal">🦴 MSK</div>
       <div class="bloque-card b-torax reveal">🫁 Tórax</div>
-      <div class="bloque-card b-tecnicos reveal">⚙️ Jornada Técnico/Licenciados/Licenciados</div>
-      <div class="bloque-card b-mamografia reveal">🔮 Taller Posicionamiento Mamario</div>
+      <div class="bloque-card b-tecnicos reveal">⚙️ Jornada Técnicos/Lic.</div>
+      <div class="bloque-card b-mamografia reveal">🔮 Posicionamiento Mamario</div>
     </div>
     <div style="text-align:center; margin-top:2.5rem" class="reveal">
       <a href="inscripcion.html" class="btn btn-primary">Reserva tu cupo →</a>

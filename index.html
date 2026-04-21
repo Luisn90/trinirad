@@ -506,6 +506,14 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 .insc-prev-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15) }
 
+/* ── PONENTE CARD WITH PHOTO ── */
+.pon-photo {
+  width: 80px; height: 80px; border-radius: 50%;
+  object-fit: cover; margin: 0 auto .8rem;
+  border: 3px solid var(--border);
+  display: block;
+}
+
 /* ── SCROLL REVEAL ── */
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease, transform .6s ease }
 .reveal.visible { opacity:1; transform:none }
@@ -525,8 +533,8 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   </a>
   <div class="nav-links">
     <a href="#bloques">Programa</a>
+    <a href="#especialistas">Especialistas</a>
     <a href="#ponentes">Ponentes</a>
-    <a href="#talleres">Talleres</a>
     <a href="#sede">Sede</a>
     <a href="#faq">FAQ</a>
     <a href="inscripcion.html" class="nav-cta">Inscríbete →</a>
@@ -536,11 +544,11 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   </button>
 </nav>
 <div class="nav-drawer" id="navDrawer">
-  <a href="#bloques"       onclick="closeMenu()">Programa</a>
-  <a href="#ponentes"      onclick="closeMenu()">Ponentes</a>
-  <a href="#talleres"      onclick="closeMenu()">Talleres</a>
-  <a href="#sede"          onclick="closeMenu()">Sede</a>
-  <a href="#faq"           onclick="closeMenu()">FAQ</a>
+  <a href="#bloques"        onclick="closeMenu()">Programa</a>
+  <a href="#especialistas"  onclick="closeMenu()">Especialistas</a>
+  <a href="#ponentes"       onclick="closeMenu()">Ponentes</a>
+  <a href="#sede"           onclick="closeMenu()">Sede</a>
+  <a href="#faq"            onclick="closeMenu()">FAQ</a>
   <a href="inscripcion.html" class="btn btn-primary">Inscríbete →</a>
 </div>
 
@@ -647,17 +655,27 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   </div>
 </section>
 
-<!-- PONENTES -->
-<section class="section section-bg" id="ponentes">
+<!-- ESPECIALISTAS CMDLT -->
+<section class="section section-bg" id="especialistas">
   <div class="container">
     <div class="reveal">
-      <div class="s-eyebrow">Ponentes Confirmados</div>
-      <h2 class="s-title">Nuestros especialistas</h2>
-      <p class="s-desc">Radiólogos e imagenólogos de trayectoria nacional presentando lo más reciente en diagnóstico por imágenes.</p>
+      <div class="s-eyebrow">Postgrado UC-CMDLT</div>
+      <h2 class="s-title">Especialistas CMDLT</h2>
+      <p class="s-desc">El cuerpo de radiólogos del Centro Médico Docente La Trinidad, columna vertebral del congreso desde su primera edición.</p>
     </div>
-    <div class="ponentes-grid" id="ponentes-grid">
-      <!-- generado por JS -->
+    <div class="ponentes-grid" id="especialistas-grid"></div>
+  </div>
+</section>
+
+<!-- PONENTES INVITADOS -->
+<section class="section" id="ponentes">
+  <div class="container">
+    <div class="reveal">
+      <div class="s-eyebrow">Ponentes Invitados</div>
+      <h2 class="s-title">Ponentes confirmados</h2>
+      <p class="s-desc">Especialistas invitados de trayectoria nacional e internacional que enriquecen el programa científico con sus investigaciones y experiencia clínica.</p>
     </div>
+    <div class="ponentes-grid" id="ponentes-grid"></div>
     <div style="text-align:center; margin-top:2.5rem" class="reveal">
       <a href="inscripcion.html" class="btn btn-primary">Inscríbete y conócelos →</a>
     </div>
@@ -920,33 +938,39 @@ function updateCountdown(){
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ── PONENTES ──
-const ponentes = [
+// ── ESPECIALISTAS CMDLT ──
+const especialistas = [
   { name:'Dr. Ramón Franco',        spec:'Radiólogo',          color:'#6A0D91' },
   { name:'Dra. Ivonne Rodríguez',   spec:'Radiólogo',          color:'#D60036' },
   { name:'Dr. Salvador Malavé',     spec:'Radiólogo',          color:'#00728C' },
   { name:'Dr. Miguel Rocha',        spec:'Radiólogo · US MSK', color:'#F56A00' },
   { name:'Dra. Vivian Hernández',   spec:'Radiólogo',          color:'#6A0D91' },
   { name:'Dra. Verónica Hernández', spec:'Radiólogo',          color:'#00728C' },
-  { name:'Dr. Carlos E. Guinand',   spec:'Radiólogo',          color:'#D60036' },
+  { name:'Dr. Carlos Guinand',      spec:'Radiólogo',          color:'#D60036' },
   { name:'Dra. Alcira Capecchi',    spec:'Radiólogo',          color:'#F56A00' },
-  { name:'Dra. Mariangela Alvarado',spec:'Radiólogo',          color:'#6A0D91' },
-  { name:'Dr. Tempra',              spec:'Ponente',            color:'#00728C' },
-  { name:'Dra. María Tirri',        spec:'Radiólogo',          color:'#D60036' },
-  { name:'Dra. Exaida Molero',      spec:'Radiólogo',          color:'#F56A00' },
-  { name:'Dr. Seijiro Yazawa',      spec:'Ponente',            color:'#6A0D91' },
-  { name:'Dra. Sandra Payares',     spec:'Radiólogo',          color:'#00728C' },
-  { name:'Dra. Carmen Delgado',     spec:'US Pulmonar',        color:'#D60036' },
 ];
-const grid = document.getElementById('ponentes-grid');
+const egrid = document.getElementById('especialistas-grid');
+especialistas.forEach((p,i) => {
+  const initials = p.name.replace('Dr. ','').replace('Dra. ','').split(' ').slice(0,2).map(w=>w[0]).join('');
+  egrid.innerHTML += `<div class="ponente-card reveal" style="animation-delay:${i*0.05}s"><div class="pon-avatar" style="background:${p.color}">${initials}</div><div class="pon-name">${p.name}</div><div class="pon-spec">${p.spec}</div></div>`;
+});
+
+// ── PONENTES INVITADOS ──
+const ponentes = [
+  { name:'Dra. Mariangela Alvarado', spec:'Radiólogo',   color:'#6A0D91', foto:null },
+  { name:'Dr. Alejandro Tempra',     spec:'Radiólogo',   color:'#00728C', foto:'ponente_tempra.webp' },
+  { name:'Dra. María Tirri',         spec:'Radiólogo',   color:'#D60036', foto:null },
+  { name:'Dra. Exaida Molero',       spec:'Radiólogo',   color:'#F56A00', foto:null },
+  { name:'Dr. Seijiro Yazawa',       spec:'Ponente',     color:'#6A0D91', foto:null },
+  { name:'Dra. Sandra Payares',      spec:'Radiólogo',   color:'#00728C', foto:'ponente_payares.webp' },
+  { name:'Dra. Carmen Delgado',      spec:'US Pulmonar', color:'#D60036', foto:null },
+  { name:'Dra. Patiño',              spec:'Radiólogo',   color:'#F56A00', foto:'ponente_patino.webp' },
+];
+const pgrid = document.getElementById('ponentes-grid');
 ponentes.forEach((p,i) => {
   const initials = p.name.replace('Dr. ','').replace('Dra. ','').split(' ').slice(0,2).map(w=>w[0]).join('');
-  grid.innerHTML += `
-    <div class="ponente-card reveal" style="animation-delay:${i*0.04}s">
-      <div class="pon-avatar" style="background:${p.color}">${initials}</div>
-      <div class="pon-name">${p.name}</div>
-      <div class="pon-spec">${p.spec}</div>
-    </div>`;
+  const av = p.foto ? `<img src="${p.foto}" alt="${p.name}" class="pon-photo">` : `<div class="pon-avatar" style="background:${p.color}">${initials}</div>`;
+  pgrid.innerHTML += `<div class="ponente-card reveal" style="animation-delay:${i*0.05}s">${av}<div class="pon-name">${p.name}</div><div class="pon-spec">${p.spec}</div></div>`;
 });
 
 // ── FAQ ──

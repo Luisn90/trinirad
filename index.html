@@ -163,6 +163,21 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 .btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid rgba(106,13,145,0.18)}
 .btn-ghost:hover{border-color:var(--violet);color:var(--violet)}
 
+@media(max-width:768px){
+  .hero{ padding:5rem 1.5rem 2.5rem; min-height:auto; }
+  .hero-eyebrow{ margin-bottom:.4rem; font-size:.64rem; padding:.28rem .8rem; }
+  .hero-logo-img{ height:clamp(65px,20vw,95px); margin-bottom:.4rem; }
+  .hero-tagline{ font-size:.84rem; margin-bottom:.6rem; }
+  .hero-chips{ margin-bottom:.6rem; gap:.3rem; }
+  .chip{ font-size:.65rem; padding:.26rem .6rem; }
+  .cd-wrap{ margin-bottom:.7rem; gap:.35rem; }
+  .cd-unit{ min-width:54px; padding:.5rem .35rem; }
+  .cd-num{ font-size:1.3rem; }
+  .cd-sep{ font-size:.48rem; margin-top:2px; }
+  .hero-btns{ gap:.5rem; flex-direction:column; align-items:stretch; width:100%; margin-top:.3rem; }
+  .hero-btns .btn{ width:100%; justify-content:center; padding:.8rem; }
+}
+
 /* ── STATS ── */
 .stats {
   background: linear-gradient(135deg, var(--violet) 0%, var(--teal) 100%);

@@ -96,40 +96,40 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  padding: 8rem 1.5rem 5rem;
+  display: flex; align-items: center;
+  padding: 0;
   position: relative; overflow: hidden;
-  background: #f8f5ff;
+  background: #ffffff;
 }
-
-/* Wave canvas background */
 #hero-canvas {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   pointer-events: none; z-index: 0;
 }
-
-/* dark overlay so text reads well */
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(248,245,255,0.15) 0%, rgba(248,245,255,0.05) 50%, rgba(248,245,255,0.2) 100%);
-  z-index: 1; pointer-events: none;
-}
+.hero-overlay { display:none }
 
 .hero-inner {
   position: relative; z-index: 2;
-  display: flex; flex-direction: column;
-  align-items: center; text-align: center;
-  max-width: 860px; width: 100%; gap: 0;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* LEFT — content */
+.hero-left {
+  padding: 10rem clamp(2rem,5vw,5rem) 6rem clamp(2rem,6vw,7rem);
+  display: flex; flex-direction: column; align-items: flex-start;
 }
 
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: .5rem;
-  border: 1.5px solid rgba(106,13,145,0.25); background: rgba(106,13,145,0.06);
-  backdrop-filter: blur(8px);
-  padding: .4rem 1.2rem; border-radius: 99px;
-  font-size: .72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--violet); margin-bottom: 1.5rem;
+  border: 1.5px solid rgba(106,13,145,0.2);
+  background: rgba(106,13,145,0.04);
+  padding: .4rem 1.1rem; border-radius: 99px;
+  font-size: .7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--violet); margin-bottom: 2rem;
 }
 .hero-eyebrow::before {
   content:''; width:7px; height:7px; border-radius:50%; background:var(--red);
@@ -137,72 +137,84 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
 
-/* BIG LOGO in hero */
 .hero-logo-img {
-  height: clamp(70px, 12vw, 130px);
-  width: auto;
-  display: block;
-  margin: 0 auto 1.2rem;
-  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.4));
+  height: clamp(52px, 8vw, 90px);
+  width: auto; display: block; margin-bottom: 1.2rem;
 }
 
 .hero-tagline {
-  font-size: clamp(.9rem, 1.8vw, 1.1rem);
-  color: var(--ink-soft);
-  font-style: italic; margin-bottom: 1.8rem; font-weight: 300;
-  letter-spacing: .3px;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--ink-soft); font-style: italic;
+  margin-bottom: 2.2rem; font-weight: 300; line-height: 1.6;
+  max-width: 420px;
 }
 
-/* chips */
-.hero-chips { display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin-bottom:2rem }
+.hero-chips {
+  display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 2.2rem;
+}
 .chip {
   display: inline-flex; align-items: center; gap: .4rem;
-  padding: .4rem .9rem; border-radius: 99px; font-size: .75rem; font-weight: 600;
-  border: 1px solid; backdrop-filter: blur(6px);
+  padding: .4rem .9rem; border-radius: 99px;
+  font-size: .73rem; font-weight: 600; border: 1.5px solid;
 }
-.chip-date  { border-color:rgba(106,13,145,0.3);  color:var(--violet); background:rgba(106,13,145,0.05) }
-.chip-place { border-color:rgba(0,114,140,0.3);   color:var(--teal);   background:rgba(0,114,140,0.05) }
-.chip-ed    { border-color:rgba(214,0,54,0.3);    color:var(--red);    background:rgba(214,0,54,0.05) }
+.chip-date  { border-color:rgba(106,13,145,0.25); color:var(--violet); background:rgba(106,13,145,0.04) }
+.chip-place { border-color:rgba(0,114,140,0.25);  color:var(--teal);   background:rgba(0,114,140,0.04) }
+.chip-ed    { border-color:rgba(214,0,54,0.25);   color:var(--red);    background:rgba(214,0,54,0.04) }
 
-/* countdown — compact inline */
+/* compact countdown */
 .cd-wrap {
-  display: flex; gap: .6rem; justify-content: center;
-  margin-bottom: 2rem;
+  display: flex; gap: .6rem; margin-bottom: 2.5rem;
 }
 .cd-unit {
   text-align: center;
-  background: rgba(255,255,255,0.7);
-  border: 1.5px solid rgba(106,13,145,0.12);
-  backdrop-filter: blur(12px);
-  border-radius: 12px; padding: .75rem .6rem; min-width: 68px;
-  box-shadow: 0 4px 20px rgba(106,13,145,0.08);
+  background: #fff; border-radius: 10px;
+  border: 1.5px solid rgba(106,13,145,0.1);
+  padding: .65rem .5rem; min-width: 62px;
+  box-shadow: 0 2px 12px rgba(106,13,145,0.07);
 }
 .cd-num {
-  display: block; font-family: var(--font-head); font-size: 1.8rem;
-  font-weight: 900; line-height: 1; color: var(--ink);
+  display: block; font-family: var(--font-head);
+  font-size: 1.6rem; font-weight: 900; line-height: 1; color: var(--ink);
 }
-.cd-sep { font-size: .58rem; color: var(--ink-muted); text-transform:uppercase; letter-spacing:1px; margin-top:4px; font-weight:600 }
+.cd-sep {
+  font-size: .55rem; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; font-weight: 600;
+}
 
-/* btns */
-.hero-btns { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
 .btn {
-  display: inline-flex; align-items:center; gap:.5rem;
-  padding: .85rem 2rem; border-radius: 99px; font-size: .88rem;
-  font-weight: 700; text-decoration: none; transition: all .25s; cursor:pointer; border:none;
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .85rem 2rem; border-radius: 8px; font-size: .88rem;
+  font-weight: 700; text-decoration: none; transition: all .25s;
+  cursor: pointer; border: none;
 }
 .btn-primary {
   background: linear-gradient(135deg, var(--violet), var(--red));
   color: var(--white);
-  box-shadow: 0 4px 20px rgba(106,13,145,0.4);
+  box-shadow: 0 4px 18px rgba(106,13,145,0.3);
 }
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(106,13,145,0.5) }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(106,13,145,0.4) }
 .btn-ghost {
-  background: rgba(255,255,255,0.6);
-  color: var(--ink-soft);
+  background: transparent; color: var(--ink-soft);
   border: 1.5px solid rgba(106,13,145,0.2);
-  backdrop-filter: blur(6px);
+  border-radius: 8px;
 }
-.btn-ghost:hover { background:rgba(255,255,255,0.9); color:var(--violet); border-color:var(--violet) }
+.btn-ghost:hover { border-color: var(--violet); color: var(--violet) }
+
+/* RIGHT — canvas fills this side */
+.hero-right-canvas {
+  position: relative; height: 100vh;
+  pointer-events: none;
+}
+
+@media(max-width:900px){
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-left  { padding: 9rem 2rem 4rem; align-items: center; text-align: center; }
+  .hero-chips { justify-content: center; }
+  .cd-wrap    { justify-content: center; }
+  .hero-btns  { justify-content: center; }
+  .hero-right-canvas { height: 40vh; }
+}
 
 /* stats strip */
 .stats {
@@ -597,42 +609,41 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 <!-- HERO -->
 <section class="hero" id="inicio">
   <canvas id="hero-canvas"></canvas>
-  <div class="hero-overlay"></div>
 
-  <div class="hero-inner reveal">
-    <div class="hero-eyebrow">IV Edición · Caracas 2026</div>
+  <div class="hero-inner">
+    <!-- LEFT: content -->
+    <div class="hero-left reveal">
+      <div class="hero-eyebrow">IV Edición · Caracas 2026</div>
+      <img src="logo_negro.webp" alt="TRINIRAD 2026" class="hero-logo-img">
+      <p class="hero-tagline">"Innovación que trasciende el diagnóstico"</p>
 
-    <img src="logo_blanco.webp" alt="TRINIRAD 2026" class="hero-logo-img">
+      <div class="hero-chips">
+        <span class="chip chip-date">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          26 y 27 Jun 2026
+        </span>
+        <span class="chip chip-place">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Auditorio Carlos Klemprer · CMDLT
+        </span>
+        <span class="chip chip-ed">+1.000 participantes</span>
+      </div>
 
-    <p class="hero-tagline">"Innovación que trasciende el diagnóstico"</p>
+      <div class="cd-wrap">
+        <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><div class="cd-sep">Días</div></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><div class="cd-sep">Horas</div></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><div class="cd-sep">Min</div></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><div class="cd-sep">Seg</div></div>
+      </div>
 
-    <div class="hero-chips">
-      <span class="chip chip-date">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        26 y 27 Jun 2026
-      </span>
-      <span class="chip chip-place">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Auditorio Carlos Klemprer · CMDLT
-      </span>
-      <span class="chip chip-ed">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        +1.000 participantes
-      </span>
+      <div class="hero-btns">
+        <a href="inscripcion.html" class="btn btn-primary">Inscríbete ahora →</a>
+        <a href="#bloques" class="btn btn-ghost">Ver programa</a>
+      </div>
     </div>
 
-    <!-- COUNTDOWN compacto -->
-    <div class="cd-wrap">
-      <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><div class="cd-sep">Días</div></div>
-      <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><div class="cd-sep">Horas</div></div>
-      <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><div class="cd-sep">Min</div></div>
-      <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><div class="cd-sep">Seg</div></div>
-    </div>
-
-    <div class="hero-btns">
-      <a href="inscripcion.html" class="btn btn-primary">Inscríbete ahora →</a>
-      <a href="#bloques" class="btn btn-ghost">Ver programa</a>
-    </div>
+    <!-- RIGHT: visual placeholder (canvas draws here) -->
+    <div class="hero-right-canvas"></div>
   </div>
 </section>
 
@@ -933,161 +944,128 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 </a>
 
 <script>
-// ── HERO 3D MESH GRID ──
+// ── HERO RIBBON (WebGL shader — Stripe style) ──
 (function(){
   const canvas = document.getElementById('hero-canvas');
-  const ctx = canvas.getContext('2d');
+  const gl = canvas.getContext('webgl', { antialias:true, alpha:true });
+  if(!gl){ canvas.style.display='none'; return; }
+
   let W, H;
-
-  const COLS = 22, ROWS = 14;
-  const COLORS = [
-    [106,13,145],   // violet
-    [214,0,54],     // red
-    [0,198,204],    // cyan
-    [245,106,0],    // orange
-    [0,114,140],    // teal
-    [180,0,120],    // magenta
-  ];
-
   function resize(){
     W = canvas.width  = window.innerWidth;
     H = canvas.height = canvas.parentElement.offsetHeight || window.innerHeight;
+    gl.viewport(0, 0, W, H);
   }
   window.addEventListener('resize', resize);
   resize();
 
-  // 3D perspective projection
-  const CAM = { z: 2.2 };
+  // Vertex shader
+  const VS = `
+    attribute vec2 a_pos;
+    void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
 
-  function project(x3, y3, z3){
-    const fov = CAM.z / (CAM.z + z3 + 1.5);
-    return {
-      x: W/2 + x3 * fov * W * 0.38,
-      y: H/2 + y3 * fov * H * 0.38,
-      fov
-    };
-  }
+  // Fragment shader — flowing ribbon with TRINIRAD colors
+  const FS = `
+    precision highp float;
+    uniform float u_time;
+    uniform vec2  u_res;
 
-  // get wave height at grid point
-  function getZ(col, row, t){
-    const nx = col / COLS, ny = row / ROWS;
-    return (
-      Math.sin(nx * Math.PI * 2.5 + t * 0.4) * 0.18 +
-      Math.sin(ny * Math.PI * 2.0 - t * 0.3) * 0.15 +
-      Math.sin((nx + ny) * Math.PI * 1.8 + t * 0.25) * 0.10 +
-      Math.sin(nx * Math.PI * 4.0 - t * 0.5) * 0.06
-    );
-  }
+    // TRINIRAD palette
+    vec3 col0 = vec3(0.416, 0.051, 0.565); // violet
+    vec3 col1 = vec3(0.839, 0.000, 0.212); // red
+    vec3 col2 = vec3(0.961, 0.416, 0.000); // orange
+    vec3 col3 = vec3(0.961, 0.843, 0.000); // gold
+    vec3 col4 = vec3(0.000, 0.776, 0.800); // cyan
+    vec3 col5 = vec3(0.706, 0.000, 0.471); // magenta
 
-  // get color at grid point based on height
-  function getColor(z, alpha){
-    // map z (-0.5 to 0.5) to color gradient
-    const t = (z + 0.5);
-    const ci = t * (COLORS.length - 1);
-    const i  = Math.min(Math.floor(ci), COLORS.length - 2);
-    const f  = ci - i;
-    const c0 = COLORS[i], c1 = COLORS[i+1];
-    const r = Math.round(c0[0] + (c1[0]-c0[0])*f);
-    const g = Math.round(c0[1] + (c1[1]-c0[1])*f);
-    const b = Math.round(c0[2] + (c1[2]-c0[2])*f);
-    return `rgba(${r},${g},${b},${alpha})`;
-  }
-
-  // precompute grid positions
-  function buildGrid(t){
-    const pts = [];
-    for(let row = 0; row <= ROWS; row++){
-      pts[row] = [];
-      for(let col = 0; col <= COLS; col++){
-        const x3 = (col/COLS - 0.5) * 2.8;
-        const y3 = (row/ROWS - 0.5) * 1.8;
-        const z3 = getZ(col, row, t);
-        const p  = project(x3, y3, z3);
-        pts[row][col] = { ...p, z3 };
-      }
+    vec3 palette(float t){
+      t = fract(t);
+      if(t < 0.2) return mix(col0, col1, t/0.2);
+      if(t < 0.4) return mix(col1, col2, (t-0.2)/0.2);
+      if(t < 0.6) return mix(col2, col3, (t-0.4)/0.2);
+      if(t < 0.8) return mix(col3, col4, (t-0.6)/0.2);
+      return mix(col4, col5, (t-0.8)/0.2);
     }
-    return pts;
+
+    float ribbon(vec2 uv, float offset, float freq, float speed, float width){
+      float wave = sin(uv.x * freq + u_time * speed + offset)  * 0.18
+                 + sin(uv.x * freq * 1.7 - u_time * speed * 0.6 + offset * 1.3) * 0.09
+                 + sin(uv.x * freq * 0.5 + u_time * speed * 1.4 + offset * 0.7) * 0.06;
+      float dist = abs(uv.y - 0.5 - wave);
+      return smoothstep(width, width * 0.3, dist);
+    }
+
+    void main(){
+      vec2 uv = gl_FragCoord.xy / u_res;
+      // Only draw on right side, bleeding into center
+      float xFade = smoothstep(0.25, 0.55, uv.x);
+
+      vec3 color = vec3(0.0);
+      float alpha = 0.0;
+
+      // Multiple ribbon layers
+      float r1 = ribbon(uv, 0.0,   3.5, 0.35, 0.055);
+      float r2 = ribbon(uv, 1.4,   2.8, 0.28, 0.045);
+      float r3 = ribbon(uv, 2.7,   4.2, 0.42, 0.035);
+      float r4 = ribbon(uv, 4.1,   1.9, 0.22, 0.060);
+      float r5 = ribbon(uv, 5.8,   3.1, 0.38, 0.040);
+
+      float t = u_time * 0.08;
+      color += palette(t + 0.0) * r1;
+      color += palette(t + 0.2) * r2;
+      color += palette(t + 0.4) * r3;
+      color += palette(t + 0.6) * r4;
+      color += palette(t + 0.8) * r5;
+
+      alpha = (r1 + r2 + r3 + r4 + r5) * xFade;
+      alpha = clamp(alpha, 0.0, 0.92);
+
+      // soft glow behind ribbons
+      float glow = (r1*0.4 + r2*0.35 + r3*0.3 + r4*0.38 + r5*0.32) * xFade * 0.5;
+      vec3 glowCol = palette(t + 0.1) * 0.7 + vec3(0.3);
+      color = mix(glowCol, color / max(alpha - glow * 0.5, 0.001), 0.7);
+
+      gl_FragColor = vec4(color, alpha * 0.88);
+    }
+  `;
+
+  function shader(type, src){
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    return s;
   }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, shader(gl.VERTEX_SHADER, VS));
+  gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FS));
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  // Full-screen quad
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'a_pos');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes  = gl.getUniformLocation(prog, 'u_res');
+
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
   function frame(ts){
-    const t = ts * 0.001;
-    ctx.clearRect(0, 0, W, H);
-
-    // Light background gradient
-    const bg = ctx.createLinearGradient(0, 0, W, H);
-    bg.addColorStop(0,   '#f8f5ff');
-    bg.addColorStop(0.5, '#f0faff');
-    bg.addColorStop(1,   '#fff5f8');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-
-    const grid = buildGrid(t);
-
-    // Draw filled quads (cells) with subtle color
-    for(let row = 0; row < ROWS; row++){
-      for(let col = 0; col < COLS; col++){
-        const p00 = grid[row][col];
-        const p10 = grid[row][col+1];
-        const p01 = grid[row+1][col];
-        const p11 = grid[row+1][col+1];
-        const avgZ = (p00.z3 + p10.z3 + p01.z3 + p11.z3) / 4;
-        ctx.beginPath();
-        ctx.moveTo(p00.x, p00.y);
-        ctx.lineTo(p10.x, p10.y);
-        ctx.lineTo(p11.x, p11.y);
-        ctx.lineTo(p01.x, p01.y);
-        ctx.closePath();
-        ctx.fillStyle = getColor(avgZ, 0.07 + p00.fov * 0.05);
-        ctx.fill();
-      }
-    }
-
-    // Draw grid lines
-    ctx.lineWidth = 0.8;
-    // horizontal lines
-    for(let row = 0; row <= ROWS; row++){
-      ctx.beginPath();
-      for(let col = 0; col <= COLS; col++){
-        const p = grid[row][col];
-        if(col === 0) ctx.moveTo(p.x, p.y);
-        else ctx.lineTo(p.x, p.y);
-      }
-      const midZ = grid[row][Math.floor(COLS/2)].z3;
-      ctx.strokeStyle = getColor(midZ, 0.22 + midZ * 0.1);
-      ctx.stroke();
-    }
-    // vertical lines
-    for(let col = 0; col <= COLS; col++){
-      ctx.beginPath();
-      for(let row = 0; row <= ROWS; row++){
-        const p = grid[row][col];
-        if(row === 0) ctx.moveTo(p.x, p.y);
-        else ctx.lineTo(p.x, p.y);
-      }
-      const midZ = grid[Math.floor(ROWS/2)][col].z3;
-      ctx.strokeStyle = getColor(midZ, 0.22 + midZ * 0.1);
-      ctx.stroke();
-    }
-
-    // Draw dots at intersections
-    for(let row = 0; row <= ROWS; row++){
-      for(let col = 0; col <= COLS; col++){
-        const p = grid[row][col];
-        const r = 1.5 + p.z3 * 3;
-        if(r < 0.3) continue;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, Math.max(0.3, r), 0, Math.PI*2);
-        ctx.fillStyle = getColor(p.z3, 0.45 + p.z3 * 0.2);
-        ctx.fill();
-      }
-    }
-
+    gl.uniform1f(uTime, ts * 0.001);
+    gl.uniform2f(uRes, W, H);
+    gl.clearColor(0,0,0,0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
 })();
 
-// ── COUNTDOWN ──
+// ── COUNTDOWN ──DOWN ──
 function updateCountdown(){
   const target = new Date('2026-06-26T08:00:00-04:00');
   const now    = new Date();

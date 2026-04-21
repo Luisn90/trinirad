@@ -99,7 +99,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   display: flex; align-items: center; justify-content: center;
   padding: 8rem 1.5rem 5rem;
   position: relative; overflow: hidden;
-  background: #08081A;
+  background: #f8f5ff;
 }
 
 /* Wave canvas background */
@@ -112,7 +112,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 /* dark overlay so text reads well */
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(10,10,18,0.45) 0%, rgba(10,10,18,0.2) 50%, rgba(10,10,18,0.55) 100%);
+  background: linear-gradient(to bottom, rgba(248,245,255,0.15) 0%, rgba(248,245,255,0.05) 50%, rgba(248,245,255,0.2) 100%);
   z-index: 1; pointer-events: none;
 }
 
@@ -125,11 +125,11 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: .5rem;
-  border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(106,13,145,0.25); background: rgba(106,13,145,0.06);
   backdrop-filter: blur(8px);
   padding: .4rem 1.2rem; border-radius: 99px;
   font-size: .72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-  color: rgba(255,255,255,0.85); margin-bottom: 1.5rem;
+  color: var(--violet); margin-bottom: 1.5rem;
 }
 .hero-eyebrow::before {
   content:''; width:7px; height:7px; border-radius:50%; background:var(--red);
@@ -148,7 +148,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 
 .hero-tagline {
   font-size: clamp(.9rem, 1.8vw, 1.1rem);
-  color: rgba(255,255,255,0.65);
+  color: var(--ink-soft);
   font-style: italic; margin-bottom: 1.8rem; font-weight: 300;
   letter-spacing: .3px;
 }
@@ -160,9 +160,9 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   padding: .4rem .9rem; border-radius: 99px; font-size: .75rem; font-weight: 600;
   border: 1px solid; backdrop-filter: blur(6px);
 }
-.chip-date  { border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.9); background:rgba(255,255,255,0.08) }
-.chip-place { border-color:rgba(0,198,204,0.5);   color:#67E8F9;               background:rgba(0,198,204,0.1) }
-.chip-ed    { border-color:rgba(255,215,0,0.4);    color:#FFD700;               background:rgba(255,215,0,0.08) }
+.chip-date  { border-color:rgba(106,13,145,0.3);  color:var(--violet); background:rgba(106,13,145,0.05) }
+.chip-place { border-color:rgba(0,114,140,0.3);   color:var(--teal);   background:rgba(0,114,140,0.05) }
+.chip-ed    { border-color:rgba(214,0,54,0.3);    color:var(--red);    background:rgba(214,0,54,0.05) }
 
 /* countdown — compact inline */
 .cd-wrap {
@@ -171,16 +171,17 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 .cd-unit {
   text-align: center;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.18);
-  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.7);
+  border: 1.5px solid rgba(106,13,145,0.12);
+  backdrop-filter: blur(12px);
   border-radius: 12px; padding: .75rem .6rem; min-width: 68px;
+  box-shadow: 0 4px 20px rgba(106,13,145,0.08);
 }
 .cd-num {
   display: block; font-family: var(--font-head); font-size: 1.8rem;
-  font-weight: 900; line-height: 1; color: var(--white);
+  font-weight: 900; line-height: 1; color: var(--ink);
 }
-.cd-sep { font-size: .58rem; color: rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-top:4px; font-weight:600 }
+.cd-sep { font-size: .58rem; color: var(--ink-muted); text-transform:uppercase; letter-spacing:1px; margin-top:4px; font-weight:600 }
 
 /* btns */
 .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center }
@@ -196,12 +197,12 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(106,13,145,0.5) }
 .btn-ghost {
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.85);
-  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.6);
+  color: var(--ink-soft);
+  border: 1.5px solid rgba(106,13,145,0.2);
   backdrop-filter: blur(6px);
 }
-.btn-ghost:hover { background:rgba(255,255,255,0.18); color:var(--white) }
+.btn-ghost:hover { background:rgba(255,255,255,0.9); color:var(--violet); border-color:var(--violet) }
 
 /* stats strip */
 .stats {
@@ -932,20 +933,20 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 </a>
 
 <script>
-// ── HERO MESH GRADIENT (stripe-style) ──
+// ── HERO 3D MESH GRID ──
 (function(){
   const canvas = document.getElementById('hero-canvas');
-  const ctx    = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
   let W, H;
 
-  // Each orb: color, position (0-1), size, movement speed & phase
-  const ORBS = [
-    { r:106, g:13,  b:145, x:.15, y:.35, s:.55, sx:.00018, sy:.00012, px:0,    py:2.1  },
-    { r:214, g:0,   b:54,  x:.75, y:.20, s:.50, sx:.00014, sy:.00017, px:1.2,  py:0.7  },
-    { r:0,   g:198, b:204, x:.80, y:.75, s:.52, sx:.00020, sy:.00011, px:2.4,  py:3.5  },
-    { r:245, g:106, b:0,   x:.40, y:.80, s:.45, sx:.00016, sy:.00019, px:3.8,  py:1.1  },
-    { r:0,   g:114, b:140, x:.55, y:.15, s:.48, sx:.00012, sy:.00015, px:0.9,  py:4.2  },
-    { r:180, g:0,   b:100, x:.25, y:.65, s:.40, sx:.00022, sy:.00013, px:5.1,  py:2.8  },
+  const COLS = 22, ROWS = 14;
+  const COLORS = [
+    [106,13,145],   // violet
+    [214,0,54],     // red
+    [0,198,204],    // cyan
+    [245,106,0],    // orange
+    [0,114,140],    // teal
+    [180,0,120],    // magenta
   ];
 
   function resize(){
@@ -955,27 +956,131 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   window.addEventListener('resize', resize);
   resize();
 
+  // 3D perspective projection
+  const CAM = { z: 2.2 };
+
+  function project(x3, y3, z3){
+    const fov = CAM.z / (CAM.z + z3 + 1.5);
+    return {
+      x: W/2 + x3 * fov * W * 0.38,
+      y: H/2 + y3 * fov * H * 0.38,
+      fov
+    };
+  }
+
+  // get wave height at grid point
+  function getZ(col, row, t){
+    const nx = col / COLS, ny = row / ROWS;
+    return (
+      Math.sin(nx * Math.PI * 2.5 + t * 0.4) * 0.18 +
+      Math.sin(ny * Math.PI * 2.0 - t * 0.3) * 0.15 +
+      Math.sin((nx + ny) * Math.PI * 1.8 + t * 0.25) * 0.10 +
+      Math.sin(nx * Math.PI * 4.0 - t * 0.5) * 0.06
+    );
+  }
+
+  // get color at grid point based on height
+  function getColor(z, alpha){
+    // map z (-0.5 to 0.5) to color gradient
+    const t = (z + 0.5);
+    const ci = t * (COLORS.length - 1);
+    const i  = Math.min(Math.floor(ci), COLORS.length - 2);
+    const f  = ci - i;
+    const c0 = COLORS[i], c1 = COLORS[i+1];
+    const r = Math.round(c0[0] + (c1[0]-c0[0])*f);
+    const g = Math.round(c0[1] + (c1[1]-c0[1])*f);
+    const b = Math.round(c0[2] + (c1[2]-c0[2])*f);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  // precompute grid positions
+  function buildGrid(t){
+    const pts = [];
+    for(let row = 0; row <= ROWS; row++){
+      pts[row] = [];
+      for(let col = 0; col <= COLS; col++){
+        const x3 = (col/COLS - 0.5) * 2.8;
+        const y3 = (row/ROWS - 0.5) * 1.8;
+        const z3 = getZ(col, row, t);
+        const p  = project(x3, y3, z3);
+        pts[row][col] = { ...p, z3 };
+      }
+    }
+    return pts;
+  }
+
   function frame(ts){
     const t = ts * 0.001;
+    ctx.clearRect(0, 0, W, H);
 
-    // Dark base — deep navy, not pure black
-    ctx.fillStyle = '#08081A';
+    // Light background gradient
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0,   '#f8f5ff');
+    bg.addColorStop(0.5, '#f0faff');
+    bg.addColorStop(1,   '#fff5f8');
+    ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
 
-    ORBS.forEach(o => {
-      // slow sinusoidal drift
-      const cx = (o.x + Math.sin(t * o.sx * 1000 + o.px) * 0.22) * W;
-      const cy = (o.y + Math.cos(t * o.sy * 1000 + o.py) * 0.18) * H;
-      const radius = o.s * Math.max(W, H) * 0.65;
+    const grid = buildGrid(t);
 
-      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-      grad.addColorStop(0,   `rgba(${o.r},${o.g},${o.b},0.38)`);
-      grad.addColorStop(0.4, `rgba(${o.r},${o.g},${o.b},0.18)`);
-      grad.addColorStop(1,   `rgba(${o.r},${o.g},${o.b},0)`);
+    // Draw filled quads (cells) with subtle color
+    for(let row = 0; row < ROWS; row++){
+      for(let col = 0; col < COLS; col++){
+        const p00 = grid[row][col];
+        const p10 = grid[row][col+1];
+        const p01 = grid[row+1][col];
+        const p11 = grid[row+1][col+1];
+        const avgZ = (p00.z3 + p10.z3 + p01.z3 + p11.z3) / 4;
+        ctx.beginPath();
+        ctx.moveTo(p00.x, p00.y);
+        ctx.lineTo(p10.x, p10.y);
+        ctx.lineTo(p11.x, p11.y);
+        ctx.lineTo(p01.x, p01.y);
+        ctx.closePath();
+        ctx.fillStyle = getColor(avgZ, 0.07 + p00.fov * 0.05);
+        ctx.fill();
+      }
+    }
 
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
-    });
+    // Draw grid lines
+    ctx.lineWidth = 0.8;
+    // horizontal lines
+    for(let row = 0; row <= ROWS; row++){
+      ctx.beginPath();
+      for(let col = 0; col <= COLS; col++){
+        const p = grid[row][col];
+        if(col === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      const midZ = grid[row][Math.floor(COLS/2)].z3;
+      ctx.strokeStyle = getColor(midZ, 0.22 + midZ * 0.1);
+      ctx.stroke();
+    }
+    // vertical lines
+    for(let col = 0; col <= COLS; col++){
+      ctx.beginPath();
+      for(let row = 0; row <= ROWS; row++){
+        const p = grid[row][col];
+        if(row === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      }
+      const midZ = grid[Math.floor(ROWS/2)][col].z3;
+      ctx.strokeStyle = getColor(midZ, 0.22 + midZ * 0.1);
+      ctx.stroke();
+    }
+
+    // Draw dots at intersections
+    for(let row = 0; row <= ROWS; row++){
+      for(let col = 0; col <= COLS; col++){
+        const p = grid[row][col];
+        const r = 1.5 + p.z3 * 3;
+        if(r < 0.3) continue;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, Math.max(0.3, r), 0, Math.PI*2);
+        ctx.fillStyle = getColor(p.z3, 0.45 + p.z3 * 0.2);
+        ctx.fill();
+      }
+    }
 
     requestAnimationFrame(frame);
   }

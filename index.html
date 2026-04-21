@@ -530,36 +530,35 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 
 
 /* ── CARRUSEL ESPECIALISTAS ── */
-.carousel-outer {
-  overflow: hidden;
+.carousel-section {
   position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
   margin-top: 2rem;
   cursor: grab;
   -webkit-user-select: none;
   user-select: none;
+  padding: 1rem 0 1.5rem;
 }
-.carousel-outer:active { cursor: grabbing; }
+.carousel-section:active { cursor: grabbing; }
 .carousel-track {
   display: flex;
   gap: 1.2rem;
   width: max-content;
-  animation: car-scroll 28s linear infinite;
   will-change: transform;
+  padding: 0 1.2rem;
 }
-.carousel-outer:hover .carousel-track {
-  animation-duration: 90s;
+/* fade edges */
+.carousel-section::before,
+.carousel-section::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
 }
-.carousel-track.is-dragging { animation-play-state: paused !important; }
-@keyframes car-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.carousel-outer::before,
-.carousel-outer::after {
-  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
-}
-.carousel-outer::before { left: 0;  background: linear-gradient(to right, var(--white), transparent); }
-.carousel-outer::after  { right: 0; background: linear-gradient(to left,  var(--white), transparent); }
+.carousel-section::before { left: 0;  background: linear-gradient(to right, var(--white) 10%, transparent); }
+.carousel-section::after  { right: 0; background: linear-gradient(to left,  var(--white) 10%, transparent); }
 .carousel-card {
   background: var(--white);
   border: 1.5px solid var(--border);
@@ -573,7 +572,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 .carousel-card:hover {
   border-color: var(--violet);
   box-shadow: 0 8px 24px rgba(106,13,145,0.12);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 /* ── PONENTE CARD WITH PHOTO ── */
@@ -735,7 +734,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
     </div>
   </div>
   <!-- CARRUSEL -->
-  <div class="carousel-outer" id="carousel-outer">
+  <div class="carousel-section" id="carousel-section">
     <div class="carousel-track" id="carousel-track"></div>
   </div>
 </section>
@@ -1014,62 +1013,103 @@ const especialistas = [
   { name:'Dr. Carlos Guinand',      spec:'Radiólogo',          color:'#D60036' },
   { name:'Dra. Alcira Capecchi',    spec:'Radiólogo',          color:'#F56A00' },
 ];
-// Build carousel — duplicate items for seamless infinite loop
+// ── CARRUSEL ESPECIALISTAS ──
 const track = document.getElementById('carousel-track');
 const buildCard = (p) => {
   const initials = p.name.replace('Dr. ','').replace('Dra. ','').split(' ').slice(0,2).map(w=>w[0]).join('');
-  return `<div class="carousel-card"><div class="pon-avatar" style="background:${p.color};width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;margin:0 auto .8rem">${initials}</div><div class="pon-name" style="font-weight:700;font-size:.82rem;color:var(--ink);margin-bottom:3px">${p.name}</div><div class="pon-spec" style="font-size:.7rem;color:var(--ink-muted)">${p.spec}</div></div>`;
+  return `<div class="carousel-card">
+    <div style="width:64px;height:64px;border-radius:50%;background:${p.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;margin:0 auto .8rem">${initials}</div>
+    <div style="font-weight:700;font-size:.82rem;color:var(--ink);margin-bottom:3px">${p.name}</div>
+    <div style="font-size:.7rem;color:var(--ink-muted)">${p.spec}</div>
+  </div>`;
 };
-// Double the items for seamless loop
-[...especialistas, ...especialistas].forEach(p => {
-  track.innerHTML += buildCard(p);
-});
+[...especialistas, ...especialistas].forEach(p => track.innerHTML += buildCard(p));
 
-// ── DRAG TO SCROLL (mouse + touch) ──
+// ── RAF-BASED SCROLL (no CSS animation — no jump on hover) ──
 (function(){
-  const outer = document.getElementById('carousel-outer');
-  let isDown = false, startX = 0, scrollLeft = 0, velX = 0, lastX = 0, lastT = 0, rafId;
+  const section  = document.getElementById('carousel-section');
+  const SPEED    = 0.6;   // px per frame normal
+  const SLOW     = 0.15;  // px per frame on hover
+  let x          = 0;
+  let hovered    = false;
+  let dragging   = false;
+  let dragStartX = 0;
+  let dragStartO = 0;
+  let velX       = 0;
+  let lastDragX  = 0;
+  let lastDragT  = 0;
+  let halfW      = 0;
 
-  const getX = e => e.touches ? e.touches[0].clientX : e.clientX;
-
-  outer.addEventListener('mousedown',  start); outer.addEventListener('touchstart', start, {passive:true});
-  outer.addEventListener('mousemove',  move);  outer.addEventListener('touchmove',  move, {passive:false});
-  outer.addEventListener('mouseup',    end);   outer.addEventListener('touchend',   end);
-  outer.addEventListener('mouseleave', end);
-
-  function start(e){
-    isDown = true;
-    track.classList.add('is-dragging');
-    startX = getX(e) - outer.offsetLeft;
-    scrollLeft = outer.scrollLeft;
-    lastX = getX(e); lastT = Date.now();
-    cancelAnimationFrame(rafId);
+  // measure half-width (one set of cards)
+  function measureHalf(){
+    halfW = track.scrollWidth / 2;
   }
-  function move(e){
-    if(!isDown) return;
-    if(e.cancelable) e.preventDefault();
-    const x = getX(e) - outer.offsetLeft;
-    outer.scrollLeft = scrollLeft - (x - startX);
-    velX = (getX(e) - lastX) / (Date.now() - lastT + 1);
-    lastX = getX(e); lastT = Date.now();
-  }
-  function end(){
-    if(!isDown) return;
-    isDown = false;
-    track.classList.remove('is-dragging');
-    // momentum
-    function momentum(){
-      if(Math.abs(velX) < 0.1) return;
-      outer.scrollLeft -= velX * 8;
-      velX *= 0.92;
-      rafId = requestAnimationFrame(momentum);
+  setTimeout(measureHalf, 100);
+
+  // hover
+  section.addEventListener('mouseenter', () => hovered = true);
+  section.addEventListener('mouseleave', () => { hovered = false; });
+
+  // drag — mouse
+  section.addEventListener('mousedown', e => {
+    dragging  = true;
+    dragStartX = e.clientX;
+    dragStartO = x;
+    velX = 0;
+    lastDragX = e.clientX;
+    lastDragT = performance.now();
+    section.style.cursor = 'grabbing';
+  });
+  window.addEventListener('mousemove', e => {
+    if(!dragging) return;
+    const dx = e.clientX - dragStartX;
+    x = dragStartO - dx;
+    const now = performance.now();
+    velX = (lastDragX - e.clientX) / (now - lastDragT + 1);
+    lastDragX = e.clientX;
+    lastDragT = now;
+  });
+  window.addEventListener('mouseup', () => {
+    if(!dragging) return;
+    dragging = false;
+    section.style.cursor = 'grab';
+  });
+
+  // drag — touch
+  section.addEventListener('touchstart', e => {
+    dragging   = true;
+    dragStartX = e.touches[0].clientX;
+    dragStartO = x;
+    velX = 0;
+    lastDragX = e.touches[0].clientX;
+    lastDragT = performance.now();
+  }, {passive:true});
+  section.addEventListener('touchmove', e => {
+    if(!dragging) return;
+    const dx = e.touches[0].clientX - dragStartX;
+    x = dragStartO - dx;
+    const now = performance.now();
+    velX = (lastDragX - e.touches[0].clientX) / (now - lastDragT + 1);
+    lastDragX = e.touches[0].clientX;
+    lastDragT = now;
+  }, {passive:true});
+  section.addEventListener('touchend', () => { dragging = false; });
+
+  // RAF loop
+  function tick(){
+    if(!dragging){
+      const speed = hovered ? SLOW : SPEED;
+      x += speed + (velX * 0.85);
+      velX *= 0.88; // momentum decay
+      if(Math.abs(velX) < 0.01) velX = 0;
     }
-    momentum();
+    // infinite wrap
+    if(halfW > 0 && x >= halfW) x -= halfW;
+    if(x < 0) x += halfW;
+    track.style.transform = `translateX(${-x}px)`;
+    requestAnimationFrame(tick);
   }
-  // Make outer scrollable to support drag offset (overflow-x hidden still)
-  outer.style.overflowX = 'scroll';
-  outer.style.scrollbarWidth = 'none';
-  outer.style.msOverflowStyle = 'none';
+  tick();
 })();
 
 // ── PONENTES INVITADOS ──

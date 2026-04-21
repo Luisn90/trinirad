@@ -354,6 +354,76 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 .sede-map iframe { width:100%; height:100%; border:none }
 
+
+/* ── ORGANIZADORES ── */
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+@media(max-width:768px){ .org-grid { grid-template-columns: 1fr; max-width:340px; margin-left:auto; margin-right:auto; } }
+@media(max-width:900px) and (min-width:769px){ .org-grid { grid-template-columns: repeat(3,1fr); gap:1.2rem; } }
+
+.org-card {
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  transition: transform .3s, box-shadow .3s;
+  position: relative;
+}
+.org-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 56px rgba(106,13,145,0.13);
+  border-color: var(--violet);
+}
+.org-photo-wrap {
+  position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+.org-photo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+  transition: transform .4s;
+}
+.org-card:hover .org-photo-wrap img { transform: scale(1.04) }
+.org-photo-wrap::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    rgba(106,13,145,0.55) 0%,
+    rgba(106,13,145,0.15) 40%,
+    transparent 65%);
+  pointer-events: none;
+}
+.org-badge {
+  position: absolute;
+  bottom: 1rem; left: 1rem; right: 1rem;
+  z-index: 2;
+  color: var(--white);
+}
+.org-name {
+  font-weight: 800; font-size: 1.05rem;
+  line-height: 1.2; margin-bottom: .2rem;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.org-role {
+  font-size: .75rem; font-weight: 500;
+  color: rgba(255,255,255,0.82);
+  letter-spacing: .3px;
+}
+.org-info {
+  padding: 1rem 1.2rem 1.2rem;
+  border-top: 1px solid var(--border);
+}
+.org-desc {
+  font-size: .82rem; color: var(--ink-muted);
+  line-height: 1.6;
+}
+
 /* ── PATROCINADORES ── */
 .sponsors-grid {
   display: flex; flex-wrap:wrap; gap:1.5rem;
@@ -801,6 +871,60 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
           allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ORGANIZADORES -->
+<section class="section" id="organizadores">
+  <div class="container">
+    <div class="reveal">
+      <div class="s-eyebrow">Comité Organizador</div>
+      <h2 class="s-title">Los adjuntos del Postgrado</h2>
+      <p class="s-desc">El equipo de radiólogos adjuntos del Postgrado de Imagenología UC-CMDLT que hace posible el congreso año tras año.</p>
+    </div>
+    <div class="org-grid">
+
+      <div class="org-card reveal">
+        <div class="org-photo-wrap">
+          <img src="organizador_malave.webp" alt="Dr. Salvador Malavé">
+          <div class="org-badge">
+            <div class="org-name">Dr. Salvador Malavé</div>
+            <div class="org-role">Adjunto · Postgrado UC-CMDLT</div>
+          </div>
+        </div>
+        <div class="org-info">
+          <p class="org-desc">Radiólogo adjunto del Postgrado de Imagenología UC-CMDLT. Miembro del comité organizador de TRINIRAD 2026.</p>
+        </div>
+      </div>
+
+      <div class="org-card reveal" style="animation-delay:.1s">
+        <div class="org-photo-wrap">
+          <img src="organizador_rocha.webp" alt="Dr. Miguel Rocha">
+          <div class="org-badge">
+            <div class="org-name">Dr. Miguel Rocha</div>
+            <div class="org-role">Adjunto · Postgrado UC-CMDLT</div>
+          </div>
+        </div>
+        <div class="org-info">
+          <p class="org-desc">Radiólogo adjunto del Postgrado de Imagenología UC-CMDLT. Instructor del Taller de Ultrasonido Musculoesquelético.</p>
+        </div>
+      </div>
+
+      <div class="org-card reveal" style="animation-delay:.2s">
+        <div class="org-photo-wrap">
+          <img src="organizador_guinand.webp" alt="Dr. Carlos Guinand">
+          <div class="org-badge">
+            <div class="org-name">Dr. Carlos Guinand</div>
+            <div class="org-role">Adjunto · Postgrado UC-CMDLT</div>
+          </div>
+        </div>
+        <div class="org-info">
+          <p class="org-desc">Radiólogo adjunto del Postgrado de Imagenología UC-CMDLT. Miembro del comité organizador de TRINIRAD 2026.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>

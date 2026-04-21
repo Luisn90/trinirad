@@ -566,18 +566,15 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 /* ── CARRUSEL ESPECIALISTAS ── */
 .carousel-section {
   position: relative;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  width: calc(100% + 3rem);
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
   overflow: hidden;
   margin-top: 2rem;
   cursor: grab;
   -webkit-user-select: none;
   user-select: none;
   padding: 1rem 0 1.5rem;
-  -webkit-overflow-scrolling: touch;
 }
 .carousel-section:active { cursor: grabbing; }
 .carousel-track {

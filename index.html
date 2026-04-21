@@ -182,6 +182,8 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   font-weight: 700; font-size: .85rem; letter-spacing: .3px;
   color: var(--white); transition: transform .2s, box-shadow .2s;
   cursor: default;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 80px;
 }
 .bloque-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.15) }
 .b-oncologia    { background: linear-gradient(135deg,#00728C,#00C6CC) }
@@ -999,52 +1001,6 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// ── SMOOTH MOMENTUM SCROLL ──
-(function(){
-  let current = window.scrollY;
-  let target  = window.scrollY;
-  let rafId   = null;
-  const ease  = 0.09;
-
-  // Override anchor clicks for smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href').slice(1);
-      const el = document.getElementById(id);
-      if(!el) return;
-      e.preventDefault();
-      target = el.getBoundingClientRect().top + window.scrollY - 68;
-      if(!rafId) loop();
-    });
-  });
-
-  // Wheel momentum
-  let wheelVel = 0;
-  window.addEventListener('wheel', e => {
-    e.preventDefault();
-    wheelVel += e.deltaY * 0.6;
-  }, { passive: false });
-
-  function loop(){
-    wheelVel *= 0.88;
-    target += wheelVel;
-    target = Math.max(0, Math.min(target, document.body.scrollHeight - window.innerHeight));
-    current += (target - current) * ease;
-    if(Math.abs(current - target) < 0.5 && Math.abs(wheelVel) < 0.5){
-      current = target;
-      window.scrollTo(0, current);
-      rafId = null;
-      return;
-    }
-    window.scrollTo(0, current);
-    rafId = requestAnimationFrame(loop);
-  }
-
-  window.addEventListener('wheel', () => {
-    if(!rafId) rafId = requestAnimationFrame(loop);
-  }, { passive: true });
-})();
 </script>
 </body>
 </html>

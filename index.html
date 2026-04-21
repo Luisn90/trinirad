@@ -275,15 +275,16 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 .bloque-card { grid-column: span 2; }
 /* Row 2: 5 cards centered — start at col 2 so offset = 1 col on each side */
 .bloque-card:nth-child(7)  { grid-column: 2 / span 2; }
-.bloque-card:nth-child(8)  { grid-column: span 2; }
-.bloque-card:nth-child(9)  { grid-column: span 2; }
-.bloque-card:nth-child(10) { grid-column: span 2; }
-.bloque-card:nth-child(11) { grid-column: span 2; }
+.bloque-card:nth-child(8)  { grid-column: 4 / span 2; }
+.bloque-card:nth-child(9)  { grid-column: 6 / span 2; }
+.bloque-card:nth-child(10) { grid-column: 8 / span 2; }
+.bloque-card:nth-child(11) { grid-column: 10 / span 2; }
+.bloque-card { width: 100% }
 
 @media(max-width:900px){
   .bloques-grid { grid-template-columns: repeat(6,1fr) }
   .bloque-card  { grid-column: span 2 }
-  .bloque-card:nth-child(7)  { grid-column: 1 / span 2 }
+  .bloque-card:nth-child(7)  { grid-column: 2 / span 2 }
 }
 @media(max-width:580px){
   .bloques-grid { grid-template-columns: repeat(2,1fr) }
@@ -527,6 +528,54 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 .insc-prev-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15) }
 
+
+/* ── CARRUSEL ESPECIALISTAS ── */
+.carousel-outer {
+  overflow: hidden;
+  position: relative;
+  margin-top: 2rem;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.carousel-outer:active { cursor: grabbing; }
+.carousel-track {
+  display: flex;
+  gap: 1.2rem;
+  width: max-content;
+  animation: car-scroll 28s linear infinite;
+  will-change: transform;
+}
+.carousel-outer:hover .carousel-track {
+  animation-duration: 90s;
+}
+.carousel-track.is-dragging { animation-play-state: paused !important; }
+@keyframes car-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.carousel-outer::before,
+.carousel-outer::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+}
+.carousel-outer::before { left: 0;  background: linear-gradient(to right, var(--white), transparent); }
+.carousel-outer::after  { right: 0; background: linear-gradient(to left,  var(--white), transparent); }
+.carousel-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  flex-shrink: 0;
+  width: 160px;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.carousel-card:hover {
+  border-color: var(--violet);
+  box-shadow: 0 8px 24px rgba(106,13,145,0.12);
+  transform: translateY(-3px);
+}
+
 /* ── PONENTE CARD WITH PHOTO ── */
 .pon-photo {
   width: 80px; height: 80px; border-radius: 50%;
@@ -684,7 +733,10 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
       <h2 class="s-title">Especialistas CMDLT</h2>
       <p class="s-desc">El cuerpo de radiólogos del Centro Médico Docente La Trinidad, columna vertebral del congreso desde su primera edición.</p>
     </div>
-    <div class="ponentes-grid" id="especialistas-grid"></div>
+  </div>
+  <!-- CARRUSEL -->
+  <div class="carousel-outer" id="carousel-outer">
+    <div class="carousel-track" id="carousel-track"></div>
   </div>
 </section>
 
@@ -962,11 +1014,63 @@ const especialistas = [
   { name:'Dr. Carlos Guinand',      spec:'Radiólogo',          color:'#D60036' },
   { name:'Dra. Alcira Capecchi',    spec:'Radiólogo',          color:'#F56A00' },
 ];
-const egrid = document.getElementById('especialistas-grid');
-especialistas.forEach((p,i) => {
+// Build carousel — duplicate items for seamless infinite loop
+const track = document.getElementById('carousel-track');
+const buildCard = (p) => {
   const initials = p.name.replace('Dr. ','').replace('Dra. ','').split(' ').slice(0,2).map(w=>w[0]).join('');
-  egrid.innerHTML += `<div class="ponente-card reveal" style="animation-delay:${i*0.05}s"><div class="pon-avatar" style="background:${p.color}">${initials}</div><div class="pon-name">${p.name}</div><div class="pon-spec">${p.spec}</div></div>`;
+  return `<div class="carousel-card"><div class="pon-avatar" style="background:${p.color};width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;margin:0 auto .8rem">${initials}</div><div class="pon-name" style="font-weight:700;font-size:.82rem;color:var(--ink);margin-bottom:3px">${p.name}</div><div class="pon-spec" style="font-size:.7rem;color:var(--ink-muted)">${p.spec}</div></div>`;
+};
+// Double the items for seamless loop
+[...especialistas, ...especialistas].forEach(p => {
+  track.innerHTML += buildCard(p);
 });
+
+// ── DRAG TO SCROLL (mouse + touch) ──
+(function(){
+  const outer = document.getElementById('carousel-outer');
+  let isDown = false, startX = 0, scrollLeft = 0, velX = 0, lastX = 0, lastT = 0, rafId;
+
+  const getX = e => e.touches ? e.touches[0].clientX : e.clientX;
+
+  outer.addEventListener('mousedown',  start); outer.addEventListener('touchstart', start, {passive:true});
+  outer.addEventListener('mousemove',  move);  outer.addEventListener('touchmove',  move, {passive:false});
+  outer.addEventListener('mouseup',    end);   outer.addEventListener('touchend',   end);
+  outer.addEventListener('mouseleave', end);
+
+  function start(e){
+    isDown = true;
+    track.classList.add('is-dragging');
+    startX = getX(e) - outer.offsetLeft;
+    scrollLeft = outer.scrollLeft;
+    lastX = getX(e); lastT = Date.now();
+    cancelAnimationFrame(rafId);
+  }
+  function move(e){
+    if(!isDown) return;
+    if(e.cancelable) e.preventDefault();
+    const x = getX(e) - outer.offsetLeft;
+    outer.scrollLeft = scrollLeft - (x - startX);
+    velX = (getX(e) - lastX) / (Date.now() - lastT + 1);
+    lastX = getX(e); lastT = Date.now();
+  }
+  function end(){
+    if(!isDown) return;
+    isDown = false;
+    track.classList.remove('is-dragging');
+    // momentum
+    function momentum(){
+      if(Math.abs(velX) < 0.1) return;
+      outer.scrollLeft -= velX * 8;
+      velX *= 0.92;
+      rafId = requestAnimationFrame(momentum);
+    }
+    momentum();
+  }
+  // Make outer scrollable to support drag offset (overflow-x hidden still)
+  outer.style.overflowX = 'scroll';
+  outer.style.scrollbarWidth = 'none';
+  outer.style.msOverflowStyle = 'none';
+})();
 
 // ── PONENTES INVITADOS ──
 const ponentes = [

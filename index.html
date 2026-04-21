@@ -99,35 +99,37 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   display: flex; align-items: center; justify-content: center;
   padding: 8rem 1.5rem 5rem;
   position: relative; overflow: hidden;
-  background: var(--white);
+  background: #0a0a12;
 }
-.hero-noise {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  opacity: .6;
+
+/* Wave canvas background */
+#hero-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
 }
-/* Blobs */
-.blob {
-  position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none;
+
+/* dark overlay so text reads well */
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(10,10,18,0.45) 0%, rgba(10,10,18,0.2) 50%, rgba(10,10,18,0.55) 100%);
+  z-index: 1; pointer-events: none;
 }
-.blob-1 { width: 600px; height: 600px; top: -150px; right: -200px; background: radial-gradient(circle, rgba(106,13,145,0.08), transparent 70%) }
-.blob-2 { width: 500px; height: 500px; bottom: -100px; left: -150px; background: radial-gradient(circle, rgba(0,198,204,0.1), transparent 70%) }
-.blob-3 { width: 350px; height: 350px; top: 30%; left: 50%; transform: translate(-50%,-50%); background: radial-gradient(circle, rgba(245,106,0,0.06), transparent 70%) }
 
 .hero-inner {
   position: relative; z-index: 2;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-  align-items: center; max-width: 1160px; width: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  max-width: 860px; width: 100%; gap: 0;
 }
-@media(max-width:900px){ .hero-inner { grid-template-columns:1fr; text-align:center } }
 
-.hero-left {}
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: .5rem;
-  border: 1.5px solid rgba(106,13,145,0.2); background: rgba(106,13,145,0.04);
-  padding: .35rem 1rem; border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  padding: .4rem 1.2rem; border-radius: 99px;
   font-size: .72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--violet); margin-bottom: 1.5rem;
+  color: rgba(255,255,255,0.85); margin-bottom: 1.5rem;
 }
 .hero-eyebrow::before {
   content:''; width:7px; height:7px; border-radius:50%; background:var(--red);
@@ -135,101 +137,71 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
 
-.hero-h1 {
-  font-family: var(--font-head); font-size: clamp(2.8rem, 5.5vw, 4.2rem);
-  font-weight: 900; line-height: 1.0; letter-spacing: -2px;
-  color: var(--ink); margin-bottom: .5rem;
-}
-.hero-h1 .logo-trini { color: var(--ink) }
-.hero-h1 .logo-rad {
-  background: linear-gradient(135deg, var(--red) 0%, var(--orange) 40%, var(--cyan) 70%, var(--violet) 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.hero-h1 .mountain {
-  display: block; font-size: .35em; font-weight: 400; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--ink-muted); margin-top: .4rem;
-  -webkit-text-fill-color: var(--ink-muted);
-}
-.hero-congreso {
-  font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 300; color: var(--ink-soft);
-  margin: 1rem 0 .5rem; letter-spacing: .5px;
-}
-.hero-congreso strong { font-weight: 700; color: var(--ink) }
-.hero-tagline {
-  font-size: clamp(.85rem, 1.5vw, 1rem); color: var(--ink-muted);
-  font-style: italic; margin-bottom: 2rem; font-weight: 400;
+/* BIG LOGO in hero */
+.hero-logo-img {
+  height: clamp(70px, 12vw, 130px);
+  width: auto;
+  display: block;
+  margin: 0 auto 1.2rem;
+  filter: drop-shadow(0 4px 24px rgba(0,0,0,0.4));
 }
 
-.hero-chips { display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:2rem }
-@media(max-width:900px){ .hero-chips { justify-content:center } }
+.hero-tagline {
+  font-size: clamp(.9rem, 1.8vw, 1.1rem);
+  color: rgba(255,255,255,0.65);
+  font-style: italic; margin-bottom: 1.8rem; font-weight: 300;
+  letter-spacing: .3px;
+}
+
+/* chips */
+.hero-chips { display:flex; gap:.6rem; flex-wrap:wrap; justify-content:center; margin-bottom:2rem }
 .chip {
   display: inline-flex; align-items: center; gap: .4rem;
   padding: .4rem .9rem; border-radius: 99px; font-size: .75rem; font-weight: 600;
-  border: 1.5px solid;
+  border: 1px solid; backdrop-filter: blur(6px);
 }
-.chip-date  { border-color:var(--violet); color:var(--violet); background:rgba(106,13,145,0.05) }
-.chip-place { border-color:var(--teal);   color:var(--teal);   background:rgba(0,114,140,0.05) }
-.chip-ed    { border-color:var(--red);    color:var(--red);    background:rgba(214,0,54,0.05) }
+.chip-date  { border-color:rgba(255,255,255,0.3); color:rgba(255,255,255,0.9); background:rgba(255,255,255,0.08) }
+.chip-place { border-color:rgba(0,198,204,0.5);   color:#67E8F9;               background:rgba(0,198,204,0.1) }
+.chip-ed    { border-color:rgba(255,215,0,0.4);    color:#FFD700;               background:rgba(255,215,0,0.08) }
 
-.hero-btns { display:flex; gap:1rem; flex-wrap:wrap }
-@media(max-width:900px){ .hero-btns { justify-content:center } }
+/* countdown — compact inline */
+.cd-wrap {
+  display: flex; gap: .6rem; justify-content: center;
+  margin-bottom: 2rem;
+}
+.cd-unit {
+  text-align: center;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  border-radius: 12px; padding: .75rem .6rem; min-width: 68px;
+}
+.cd-num {
+  display: block; font-family: var(--font-head); font-size: 1.8rem;
+  font-weight: 900; line-height: 1; color: var(--white);
+}
+.cd-sep { font-size: .58rem; color: rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:1px; margin-top:4px; font-weight:600 }
+
+/* btns */
+.hero-btns { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center }
 .btn {
   display: inline-flex; align-items:center; gap:.5rem;
-  padding: .8rem 1.8rem; border-radius: 99px; font-size: .85rem;
+  padding: .85rem 2rem; border-radius: 99px; font-size: .88rem;
   font-weight: 700; text-decoration: none; transition: all .25s; cursor:pointer; border:none;
 }
 .btn-primary {
   background: linear-gradient(135deg, var(--violet), var(--red));
   color: var(--white);
+  box-shadow: 0 4px 20px rgba(106,13,145,0.4);
 }
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(106,13,145,0.28) }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(106,13,145,0.5) }
 .btn-ghost {
-  background: transparent; color: var(--ink-soft);
-  border: 1.5px solid rgba(106,13,145,0.2);
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(6px);
 }
-.btn-ghost:hover { border-color:var(--violet); color:var(--violet) }
-
-/* countdown right */
-.hero-right {}
-.countdown-card {
-  background: var(--white);
-  border: 1.5px solid var(--border);
-  border-radius: 24px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 20px 60px rgba(106,13,145,0.08), 0 4px 12px rgba(0,0,0,0.04);
-  position: relative; overflow: hidden;
-}
-.countdown-card::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:4px;
-  background: linear-gradient(90deg, var(--violet), var(--red), var(--orange), var(--gold), var(--cyan), var(--teal));
-}
-.cd-label-top {
-  text-align: center; font-size: .7rem; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1.5rem;
-}
-.cd-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; margin-bottom:.5rem }
-.cd-unit {
-  text-align: center;
-  background: var(--off); border-radius: 12px; padding: 1rem .5rem;
-  border: 1px solid var(--border);
-}
-.cd-num {
-  display: block; font-family: var(--font-head); font-size: 2.2rem;
-  font-weight: 900; line-height: 1; color: var(--ink);
-}
-.cd-sep { font-size: .65rem; color: var(--ink-muted); text-transform:uppercase; letter-spacing:1px; margin-top:4px; font-weight:600 }
-.cd-dividers { display:grid; grid-template-columns:repeat(3,1fr); text-align:center; margin-top:-.2rem; color:var(--ink-muted); font-size:1.4rem; font-weight:300 }
-.cd-event {
-  margin-top: 1.5rem; padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-  display: flex; flex-direction:column; gap: .5rem;
-}
-.cd-event-row {
-  display: flex; align-items: center; gap: .6rem;
-  font-size: .82rem; color: var(--ink-soft);
-}
-.cd-event-row svg { flex-shrink:0; color:var(--violet) }
-.cd-event-row strong { color:var(--ink); font-weight:600 }
+.btn-ghost:hover { background:rgba(255,255,255,0.18); color:var(--white) }
 
 /* stats strip */
 .stats {
@@ -623,66 +595,42 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 
 <!-- HERO -->
 <section class="hero" id="inicio">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-  <div class="hero-noise"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-overlay"></div>
 
-  <div class="hero-inner">
-    <div class="hero-left reveal">
-      <div class="hero-eyebrow">IV Edición · Caracas 2026</div>
-      <h1 class="hero-h1">
-        <span class="logo-trini">trini</span><span class="logo-rad">rad</span>
-        <span class="mountain">Congreso de Imagenología</span>
-      </h1>
-      <p class="hero-congreso"><strong>IV Congreso de Imagenología</strong></p>
-      <p class="hero-tagline">"Innovación que trasciende el diagnóstico"</p>
+  <div class="hero-inner reveal">
+    <div class="hero-eyebrow">IV Edición · Caracas 2026</div>
 
-      <div class="hero-chips">
-        <span class="chip chip-date">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          26 y 27 Jun 2026
-        </span>
-        <span class="chip chip-place">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          CMDLT · Caracas
-        </span>
-        <span class="chip chip-ed">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          +1.000 participantes
-        </span>
-      </div>
+    <img src="logo_blanco.webp" alt="TRINIRAD 2026" class="hero-logo-img">
 
-      <div class="hero-btns">
-        <a href="inscripcion.html" class="btn btn-primary">Inscríbete ahora →</a>
-        <a href="#bloques" class="btn btn-ghost">Ver programa</a>
-      </div>
+    <p class="hero-tagline">"Innovación que trasciende el diagnóstico"</p>
+
+    <div class="hero-chips">
+      <span class="chip chip-date">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        26 y 27 Jun 2026
+      </span>
+      <span class="chip chip-place">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Auditorio Carlos Klemprer · CMDLT
+      </span>
+      <span class="chip chip-ed">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        +1.000 participantes
+      </span>
     </div>
 
-    <div class="hero-right reveal" style="animation-delay:.15s">
-      <div class="countdown-card">
-        <p class="cd-label-top">Faltan</p>
-        <div class="cd-grid">
-          <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><div class="cd-sep">Días</div></div>
-          <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><div class="cd-sep">Horas</div></div>
-          <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><div class="cd-sep">Min</div></div>
-          <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><div class="cd-sep">Seg</div></div>
-        </div>
-        <div class="cd-event">
-          <div class="cd-event-row">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            <span><strong>26 y 27 de junio de 2026</strong> · 8:00 AM – 6:00 PM</span>
-          </div>
-          <div class="cd-event-row">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span>Auditorio Carlos Klemprer · <strong>CMDLT, Caracas</strong></span>
-          </div>
-          <div class="cd-event-row">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-            <span>Postgrado de Imagenología · <strong>UC-CMDLT</strong></span>
-          </div>
-        </div>
-      </div>
+    <!-- COUNTDOWN compacto -->
+    <div class="cd-wrap">
+      <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><div class="cd-sep">Días</div></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><div class="cd-sep">Horas</div></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><div class="cd-sep">Min</div></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><div class="cd-sep">Seg</div></div>
+    </div>
+
+    <div class="hero-btns">
+      <a href="inscripcion.html" class="btn btn-primary">Inscríbete ahora →</a>
+      <a href="#bloques" class="btn btn-ghost">Ver programa</a>
     </div>
   </div>
 </section>
@@ -984,6 +932,55 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 </a>
 
 <script>
+// ── HERO WAVE CANVAS ──
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  const WAVES = [
+    { color:'rgba(106,13,145,0.55)',  speed:0.0008, amp:0.13, freq:1.8,  y:0.55, thick:180 },
+    { color:'rgba(214,0,54,0.45)',    speed:0.0011, amp:0.10, freq:2.3,  y:0.62, thick:160 },
+    { color:'rgba(245,106,0,0.40)',   speed:0.0007, amp:0.12, freq:1.5,  y:0.70, thick:200 },
+    { color:'rgba(0,198,204,0.38)',   speed:0.0013, amp:0.09, freq:2.8,  y:0.48, thick:150 },
+    { color:'rgba(0,114,140,0.42)',   speed:0.0009, amp:0.11, freq:2.1,  y:0.78, thick:170 },
+    { color:'rgba(255,215,0,0.22)',   speed:0.0015, amp:0.07, freq:3.2,  y:0.40, thick:120 },
+  ];
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = canvas.parentElement.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function drawWave(w){
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for(let x = 0; x <= W; x += 3){
+      const y = H * w.y + Math.sin(x * w.freq / W * Math.PI * 2 + t * w.speed * 1000) * H * w.amp
+                        + Math.sin(x * w.freq * 1.7 / W * Math.PI * 2 - t * w.speed * 800) * H * w.amp * 0.4;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W, H); ctx.lineTo(0, H);
+    ctx.closePath();
+    ctx.fillStyle = w.color;
+    ctx.fill();
+  }
+
+  let last = 0;
+  function frame(ts){
+    t = ts;
+    ctx.clearRect(0, 0, W, H);
+    // dark base
+    ctx.fillStyle = '#0a0a12';
+    ctx.fillRect(0, 0, W, H);
+    WAVES.forEach(w => drawWave(w));
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
 // ── COUNTDOWN ──
 function updateCountdown(){
   const target = new Date('2026-06-26T08:00:00-04:00');

@@ -9,447 +9,428 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --violet:#6A0D91; --red:#D60036; --orange:#F56A00;
-  --gold:#FFD700;   --cyan:#00C6CC; --teal:#00728C;
-  --white:#FFFFFF;  --off:#F8F6F2;  --ink:#1A1018;
-  --ink-soft:#4A3F4F; --ink-muted:#8A7F8F;
+  --violet:#6A0D91;--red:#D60036;--orange:#F56A00;
+  --gold:#FFD700;--cyan:#00C6CC;--teal:#00728C;
+  --white:#FFFFFF;--off:#F8F6F2;--ink:#1A1018;
+  --ink-soft:#4A3F4F;--ink-muted:#8A7F8F;
   --border:rgba(106,13,145,0.1);
-  --font:'Poppins',sans-serif; --r:20px;
+  --font:'Poppins',sans-serif;--r:20px;
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--font);color:var(--ink);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-/* ── NAVBAR ── */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;height:68px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 clamp(1.5rem,5vw,4rem);
-  background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);transition:box-shadow .3s;
-}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1.5rem,5vw,4rem);background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
 .nav.scrolled{box-shadow:0 2px 24px rgba(106,13,145,0.08)}
-.nav-logo{font-family:var(--font);font-weight:800;font-size:1.25rem;letter-spacing:-.5px;text-decoration:none;display:flex;align-items:center}
+.nav-logo{font-weight:800;font-size:1.25rem;letter-spacing:-.5px;text-decoration:none;display:flex;align-items:center}
 .nav-logo .trini{color:var(--ink)}
 .nav-logo .rad{background:linear-gradient(135deg,var(--red),var(--orange),var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .nav-links{display:flex;gap:2rem;align-items:center}
 .nav-links a{font-size:.82rem;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--violet)}
-.nav-back{background:var(--off);color:var(--ink)!important;padding:.5rem 1.2rem;border-radius:99px;font-weight:600!important;font-size:.8rem!important;border:1.5px solid var(--border);transition:all .2s}
-.nav-back:hover{border-color:var(--violet);color:var(--violet)!important}
+.nav-back{background:var(--off);color:var(--ink)!important;padding:.5rem 1.2rem;border-radius:99px;font-weight:600!important;font-size:.8rem!important;border:1.5px solid var(--border)}
 .nav-mobile{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:4px}
 .nav-mobile span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px}
 @media(max-width:768px){.nav-links{display:none}.nav-mobile{display:flex}}
 
-/* ── HERO ── */
-.hero{
-  padding:8rem clamp(1.5rem,5vw,4rem) 5rem;
-  background:var(--white);position:relative;overflow:hidden;text-align:center;
-}
+.hero{padding:8rem clamp(1.5rem,5vw,4rem) 4rem;background:var(--white);position:relative;overflow:hidden;text-align:center}
 .blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
 .blob-1{width:500px;height:500px;top:-150px;right:-150px;background:radial-gradient(circle,rgba(106,13,145,0.07),transparent 70%)}
 .blob-2{width:400px;height:400px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(0,198,204,0.08),transparent 70%)}
-.hero-inner{position:relative;z-index:2;max-width:700px;margin:0 auto}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:.5rem;
-  border:1.5px solid rgba(106,13,145,0.2);background:rgba(106,13,145,0.04);
-  padding:.35rem 1rem;border-radius:99px;font-size:.72rem;font-weight:600;
-  letter-spacing:1.5px;text-transform:uppercase;color:var(--violet);margin-bottom:1.5rem;
-}
+.hero-inner{position:relative;z-index:2;max-width:680px;margin:0 auto}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(106,13,145,0.2);background:rgba(106,13,145,0.04);padding:.35rem 1rem;border-radius:99px;font-size:.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--violet);margin-bottom:1.5rem}
 .hero-eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--ink);margin-bottom:.8rem}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:900;line-height:1.05;letter-spacing:-2px;color:var(--ink);margin-bottom:.8rem}
 .hero h1 span{background:linear-gradient(135deg,var(--violet),var(--red),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-sub{font-size:1rem;color:var(--ink-muted);line-height:1.7;margin-bottom:2rem;max-width:560px;margin-left:auto;margin-right:auto}
-.hero-chips{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
-.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border-radius:99px;font-size:.75rem;font-weight:600;border:1.5px solid}
-.chip-date{border-color:var(--violet);color:var(--violet);background:rgba(106,13,145,0.05)}
-.chip-place{border-color:var(--teal);color:var(--teal);background:rgba(0,114,140,0.05)}
+.hero-sub{font-size:.95rem;color:var(--ink-muted);line-height:1.7;max-width:520px;margin:0 auto}
 
-/* ── DIVIDER ── */
 .divider{height:4px;background:linear-gradient(90deg,var(--violet),var(--red),var(--orange),var(--gold),var(--cyan),var(--teal))}
 
-/* ── CARDS GRID ── */
-.section{padding:5rem clamp(1.5rem,5vw,4rem)}
-.container{max-width:1100px;margin:0 auto}
-.s-eyebrow{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--violet);margin-bottom:.6rem}
-.s-title{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-1px;color:var(--ink);margin-bottom:.5rem}
-.s-desc{font-size:.9rem;color:var(--ink-muted);line-height:1.7;margin-bottom:2.5rem;max-width:600px}
+/* TABS */
+.tabs-section{padding:3rem clamp(1.5rem,5vw,4rem) 0}
+.tabs-center{max-width:1100px;margin:0 auto}
+.tabs-bar{display:flex;gap:.5rem;background:var(--off);border-radius:14px;padding:.4rem;width:fit-content;margin:0 auto 3rem}
+.tab-btn{padding:.75rem 2.2rem;border-radius:10px;border:none;cursor:pointer;font-family:var(--font);font-size:.9rem;font-weight:600;background:transparent;color:var(--ink-muted);transition:all .25s;display:flex;align-items:center;gap:.6rem}
+.tab-btn.active{background:var(--white);color:var(--ink);box-shadow:0 2px 14px rgba(0,0,0,0.08)}
+.tab-count{font-size:.68rem;padding:.15rem .5rem;border-radius:99px;font-weight:700;background:rgba(106,13,145,0.08);color:var(--violet)}
+.tab-btn.active .tab-count{background:linear-gradient(135deg,var(--violet),var(--red));color:var(--white)}
 
-/* Congress cards */
-.cards-congreso{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:1.5rem;margin-bottom:4rem}
-@media(max-width:520px){.cards-congreso{grid-template-columns:1fr}}
+.tab-panel{display:none;max-width:1100px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem) 5rem}
+.tab-panel.active{display:block}
 
-.insc-card{
-  border-radius:var(--r);border:1.5px solid var(--border);
-  background:var(--white);overflow:hidden;
-  transition:transform .25s,box-shadow .25s;
-  display:flex;flex-direction:column;
-}
-.insc-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(106,13,145,0.12)}
+/* CARDS */
+.cards-2col{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:1.5rem}
+.cards-3col{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+@media(max-width:480px){.cards-2col,.cards-3col{grid-template-columns:1fr}}
 
-.card-header{padding:2rem 2rem 1.5rem;position:relative}
-.card-accent{position:absolute;top:0;left:0;right:0;height:5px}
-.card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:1rem}
-.card-tag{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.4rem}
-.card-title{font-size:1.3rem;font-weight:800;color:var(--ink);letter-spacing:-.5px;margin-bottom:.4rem}
-.card-desc{font-size:.85rem;color:var(--ink-muted);line-height:1.6}
+.insc-card{border-radius:var(--r);border:1.5px solid var(--border);background:var(--white);overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+.insc-card:hover{transform:translateY(-5px);box-shadow:0 18px 48px rgba(106,13,145,0.1)}
+.card-top-bar{height:5px;width:100%}
+.card-body{padding:2rem;flex:1;display:flex;flex-direction:column;gap:1rem}
+.card-icon-row{display:flex;align-items:center;gap:.8rem}
+.card-icon{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.card-tag{font-size:.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.card-title{font-size:1.2rem;font-weight:800;color:var(--ink);letter-spacing:-.4px;margin-top:-.3rem}
+.card-desc{font-size:.85rem;color:var(--ink-muted);line-height:1.65;flex:1}
+.card-metas{display:flex;flex-direction:column;gap:.55rem}
+.card-meta-row{display:flex;align-items:flex-start;gap:.6rem;font-size:.8rem;color:var(--ink-soft)}
+.card-meta-row svg{flex-shrink:0;margin-top:1px}
+.card-meta-row strong{color:var(--ink);font-weight:600}
+.card-footer{padding:1.2rem 2rem;border-top:1px solid var(--border)}
+.card-btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:.85rem;border-radius:99px;font-size:.85rem;font-weight:700;text-decoration:none;color:var(--white);transition:all .25s}
+.card-btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
 
-.card-meta{padding:0 2rem 1.5rem;display:flex;flex-direction:column;gap:.6rem}
-.meta-row{display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--ink-soft)}
-.meta-row svg{flex-shrink:0}
-.meta-row strong{color:var(--ink);font-weight:600}
+/* colores congreso */
+.c-medicos .card-top-bar{background:linear-gradient(90deg,var(--violet),var(--red))}
+.c-medicos .card-tag{color:var(--violet)}
+.c-medicos .card-icon{background:rgba(106,13,145,0.08)}
+.c-medicos .card-btn{background:linear-gradient(135deg,var(--violet),var(--red))}
 
-.card-footer{padding:1.5rem 2rem;border-top:1px solid var(--border);margin-top:auto}
-.card-btn{
-  display:flex;align-items:center;justify-content:center;gap:.5rem;
-  width:100%;padding:.9rem 1.5rem;border-radius:99px;
-  font-size:.88rem;font-weight:700;text-decoration:none;
-  transition:all .25s;letter-spacing:.2px;
-}
+.c-tecnicos .card-top-bar{background:linear-gradient(90deg,var(--teal),var(--cyan))}
+.c-tecnicos .card-tag{color:var(--teal)}
+.c-tecnicos .card-icon{background:rgba(0,114,140,0.08)}
+.c-tecnicos .card-btn{background:linear-gradient(135deg,var(--teal),var(--cyan))}
 
-/* Congreso Médicos — violeta */
-.card-medicos .card-accent{background:linear-gradient(90deg,var(--violet),var(--red))}
-.card-medicos .card-icon{background:rgba(106,13,145,0.08)}
-.card-medicos .card-tag{color:var(--violet)}
-.card-medicos .card-btn{background:linear-gradient(135deg,var(--violet),var(--red));color:var(--white)}
-.card-medicos .card-btn:hover{box-shadow:0 8px 28px rgba(106,13,145,0.3);transform:translateY(-2px)}
+/* colores talleres */
+.c-msk .card-top-bar{background:linear-gradient(90deg,var(--red),var(--orange))}
+.c-msk .card-tag{color:var(--red)}
+.c-msk .card-icon{background:rgba(214,0,54,0.08)}
+.c-msk .card-btn{background:linear-gradient(135deg,var(--red),var(--orange))}
 
-/* Congreso Técnicos — teal */
-.card-tecnicos .card-accent{background:linear-gradient(90deg,var(--teal),var(--cyan))}
-.card-tecnicos .card-icon{background:rgba(0,114,140,0.08)}
-.card-tecnicos .card-tag{color:var(--teal)}
-.card-tecnicos .card-btn{background:linear-gradient(135deg,var(--teal),var(--cyan));color:var(--white)}
-.card-tecnicos .card-btn:hover{box-shadow:0 8px 28px rgba(0,114,140,0.3);transform:translateY(-2px)}
+.c-pulmonar .card-top-bar{background:linear-gradient(90deg,var(--teal),var(--cyan))}
+.c-pulmonar .card-tag{color:var(--teal)}
+.c-pulmonar .card-icon{background:rgba(0,198,204,0.08)}
+.c-pulmonar .card-btn{background:linear-gradient(135deg,var(--teal),var(--cyan))}
 
-/* Talleres */
-.cards-talleres{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
-@media(max-width:400px){.cards-talleres{grid-template-columns:1fr}}
+.c-mamografia .card-top-bar{background:linear-gradient(90deg,var(--violet),#C0579A)}
+.c-mamografia .card-tag{color:var(--violet)}
+.c-mamografia .card-icon{background:rgba(106,13,145,0.08)}
+.c-mamografia .card-btn{background:linear-gradient(135deg,var(--violet),#C0579A)}
 
-/* Taller MSK — rojo */
-.card-msk .card-accent{background:linear-gradient(90deg,var(--red),var(--orange))}
-.card-msk .card-icon{background:rgba(214,0,54,0.08)}
-.card-msk .card-tag{color:var(--red)}
-.card-msk .card-btn{background:linear-gradient(135deg,var(--red),var(--orange));color:var(--white)}
-.card-msk .card-btn:hover{box-shadow:0 8px 28px rgba(214,0,54,0.3);transform:translateY(-2px)}
-
-/* Taller Pulmonar — cyan */
-.card-pulmonar .card-accent{background:linear-gradient(90deg,var(--teal),var(--cyan))}
-.card-pulmonar .card-icon{background:rgba(0,198,204,0.08)}
-.card-pulmonar .card-tag{color:var(--teal)}
-.card-pulmonar .card-btn{background:linear-gradient(135deg,var(--teal),var(--cyan));color:var(--white)}
-.card-pulmonar .card-btn:hover{box-shadow:0 8px 28px rgba(0,198,204,0.3);transform:translateY(-2px)}
-
-/* Taller Mamografía — violeta-rosa */
-.card-mamografia .card-accent{background:linear-gradient(90deg,var(--violet),#C0579A)}
-.card-mamografia .card-icon{background:rgba(106,13,145,0.08)}
-.card-mamografia .card-tag{color:var(--violet)}
-.card-mamografia .card-btn{background:linear-gradient(135deg,var(--violet),#C0579A);color:var(--white)}
-.card-mamografia .card-btn:hover{box-shadow:0 8px 28px rgba(106,13,145,0.3);transform:translateY(-2px)}
-
-/* ── NOTA INFO ── */
-.info-box{
-  background:rgba(106,13,145,0.04);border:1.5px solid rgba(106,13,145,0.15);
-  border-radius:var(--r);padding:1.5rem 2rem;margin-top:3rem;
-  display:flex;align-items:flex-start;gap:1rem;
-}
+/* info box */
+.info-box{background:rgba(106,13,145,0.04);border:1.5px solid rgba(106,13,145,0.15);border-radius:var(--r);padding:1.4rem 1.8rem;margin-top:2.5rem;display:flex;align-items:flex-start;gap:.9rem}
 .info-box svg{flex-shrink:0;margin-top:2px;color:var(--violet)}
-.info-box p{font-size:.85rem;color:var(--ink-soft);line-height:1.7}
-.info-box p strong{color:var(--ink);font-weight:600}
+.info-box p{font-size:.84rem;color:var(--ink-soft);line-height:1.7}
 .info-box a{color:var(--violet);font-weight:600;text-decoration:none}
-.info-box a:hover{text-decoration:underline}
 
-/* ── FOOTER ── */
+/* footer */
 .footer{background:var(--ink);color:rgba(255,255,255,.5);padding:3rem clamp(1.5rem,5vw,4rem) 2rem}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem}
-.footer-brand .logo{font-family:var(--font);font-weight:800;font-size:1.2rem}
-.footer-brand .logo .trini{color:var(--white)}
-.footer-brand .logo .rad{background:linear-gradient(135deg,var(--red),var(--orange),var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.footer-brand p{font-size:.78rem;margin-top:.3rem}
-.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
-.footer-links a{font-size:.78rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
-.footer-links a:hover{color:var(--white)}
-.footer-copy{max-width:1100px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);font-size:.72rem;text-align:center}
+.f-logo{font-weight:800;font-size:1.2rem}
+.f-logo .trini{color:var(--white)}
+.f-logo .rad{background:linear-gradient(135deg,var(--red),var(--orange),var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.f-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.f-links a{font-size:.78rem;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.f-links a:hover{color:var(--white)}
+.f-copy{max-width:1100px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);font-size:.72rem;text-align:center}
 
-/* ── WA FLOAT ── */
 .wa-float{position:fixed;bottom:2rem;right:2rem;z-index:300;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#25D366,#128C7E);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:transform .2s;text-decoration:none}
 .wa-float:hover{transform:scale(1.1)}
 .wa-float svg{width:28px;height:28px;fill:white}
 
-/* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:none}
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="nav" id="navbar">
   <a href="index.html" class="nav-logo"><span class="trini">trini</span><span class="rad">rad</span></a>
   <div class="nav-links">
     <a href="index.html#bloques">Programa</a>
     <a href="index.html#ponentes">Ponentes</a>
-    <a href="talleres.html">Talleres</a>
     <a href="index.html#sede">Sede</a>
-    <a href="index.html" class="nav-back">← Volver al inicio</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html" class="nav-back">← Inicio</a>
   </div>
-  <button class="nav-mobile" id="navToggle" aria-label="Menú">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="nav-mobile" id="navToggle" aria-label="Menú"><span></span><span></span><span></span></button>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
   <div class="hero-inner reveal">
     <div class="hero-eyebrow">Inscripción Abierta · 2026</div>
-    <h1>Elige tu <span>modalidad</span><br>de inscripción</h1>
-    <p class="hero-sub">Selecciona la categoría que corresponde a tu perfil profesional y completa el formulario de inscripción. Nuestro equipo te contactará con los datos de pago y confirmación.</p>
-    <div class="hero-chips">
-      <span class="chip chip-date">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        26 y 27 Jun 2026
-      </span>
-      <span class="chip chip-place">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Auditorio Carlos Klemprer · CMDLT
-      </span>
-    </div>
+    <h1>Elige tu <span>modalidad</span></h1>
+    <p class="hero-sub">Selecciona la categoría que corresponde a tu perfil. Puedes inscribirte al congreso, a uno o varios talleres, o a ambos.</p>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- CONGRESO -->
-<section class="section" id="congreso">
-  <div class="container">
-    <div class="reveal">
-      <div class="s-eyebrow">Congreso Principal</div>
-      <h2 class="s-title">IV Congreso de Imagenología</h2>
-      <p class="s-desc">Acceso completo a los 9 bloques temáticos, ponencias, certificado digital y actividades del congreso.</p>
+<!-- TABS -->
+<div class="tabs-section">
+  <div class="tabs-center">
+    <div class="tabs-bar">
+      <button class="tab-btn active" data-tab="congreso">
+        🎓 Congreso <span class="tab-count">2</span>
+      </button>
+      <button class="tab-btn" data-tab="talleres">
+        🛠️ Talleres Pre-Congreso <span class="tab-count">3</span>
+      </button>
     </div>
+  </div>
+</div>
 
-    <div class="cards-congreso">
+<!-- PANEL CONGRESO -->
+<div class="tab-panel active" id="panel-congreso">
+  <div class="cards-2col">
 
-      <!-- MÉDICOS -->
-      <div class="insc-card card-medicos reveal" id="congreso-medicos">
-        <div class="card-header">
-          <div class="card-accent"></div>
+    <!-- Médicos -->
+    <div class="insc-card c-medicos reveal">
+      <div class="card-top-bar"></div>
+      <div class="card-body">
+        <div class="card-icon-row">
           <div class="card-icon">🩺</div>
-          <div class="card-tag">Congreso · Médicos</div>
-          <div class="card-title">Inscripción para Médicos</div>
-          <p class="card-desc">Para radiólogos, residentes de imagenología, médicos especialistas, médicos generales y estudiantes de medicina.</p>
+          <div>
+            <div class="card-tag">Congreso · Médicos</div>
+            <div class="card-title">Inscripción para Médicos</div>
+          </div>
         </div>
-        <div class="card-meta">
-          <div class="meta-row">
+        <p class="card-desc">Para radiólogos, residentes de imagenología, médicos especialistas, médicos generales y estudiantes de medicina.</p>
+        <div class="card-metas">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
             <span><strong>Dirigido a:</strong> Radiólogos, residentes, médicos generales, estudiantes</span>
           </div>
-          <div class="meta-row">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             <span><strong>Fecha:</strong> 26 y 27 de junio de 2026 · 8:00 AM – 6:00 PM</span>
           </div>
-          <div class="meta-row">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            <span><strong>Incluye:</strong> Acceso a ponencias, certificado digital avalado UC-CMDLT</span>
+            <span><strong>Incluye:</strong> Acceso a ponencias y certificado digital avalado UC-CMDLT</span>
           </div>
-          <div class="meta-row">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span><strong>Sede:</strong> Auditorio Carlos Klemprer · CMDLT, Caracas</span>
           </div>
         </div>
-        <div class="card-footer">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFC5ptCKCiVBodDW5Yh9pUGTbqW3XRdESvCXRiU7_L2NNtzg/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
-            Inscribirme — Congreso Médicos →
-          </a>
-        </div>
       </div>
+      <div class="card-footer">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFC5ptCKCiVBodDW5Yh9pUGTbqW3XRdESvCXRiU7_L2NNtzg/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
+          Inscribirme — Congreso Médicos →
+        </a>
+      </div>
+    </div>
 
-      <!-- TÉCNICOS -->
-      <div class="insc-card card-tecnicos reveal" id="congreso-tecnicos">
-        <div class="card-header">
-          <div class="card-accent"></div>
+    <!-- Técnicos -->
+    <div class="insc-card c-tecnicos reveal">
+      <div class="card-top-bar"></div>
+      <div class="card-body">
+        <div class="card-icon-row">
           <div class="card-icon">⚙️</div>
-          <div class="card-tag">Congreso · Técnicos</div>
-          <div class="card-title">Inscripción para Técnicos</div>
-          <p class="card-desc">Para técnicos radiólogos, licenciados en imagenología y tecnólogos médicos en diagnóstico por imágenes.</p>
+          <div>
+            <div class="card-tag">Congreso · Técnicos</div>
+            <div class="card-title">Inscripción para Técnicos</div>
+          </div>
         </div>
-        <div class="card-meta">
-          <div class="meta-row">
+        <p class="card-desc">Para técnicos radiólogos, licenciados en imagenología y tecnólogos médicos en diagnóstico por imágenes.</p>
+        <div class="card-metas">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
             <span><strong>Dirigido a:</strong> Técnicos radiólogos, licenciados en imagenología</span>
           </div>
-          <div class="meta-row">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             <span><strong>Fecha:</strong> 26 y 27 de junio de 2026 · 8:00 AM – 6:00 PM</span>
           </div>
-          <div class="meta-row">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            <span><strong>Incluye:</strong> Acceso a ponencias, certificado digital avalado UC-CMDLT</span>
+            <span><strong>Incluye:</strong> Acceso a ponencias y certificado digital avalado UC-CMDLT</span>
           </div>
-          <div class="meta-row">
+          <div class="card-meta-row">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span><strong>Sede:</strong> Auditorio Carlos Klemprer · CMDLT, Caracas</span>
           </div>
         </div>
-        <div class="card-footer">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdu3aTiO2LyhayzgenybHro77jVibKOGkt-dH7RWjQlzas_GA/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
-            Inscribirme — Congreso Técnicos →
-          </a>
-        </div>
       </div>
-
-    </div><!-- /cards-congreso -->
-
-    <!-- TALLERES -->
-    <div class="reveal">
-      <div class="s-eyebrow">Talleres Pre-Congreso</div>
-      <h2 class="s-title">Talleres especializados</h2>
-      <p class="s-desc">Formación práctica intensiva el día previo al congreso. Inscripción independiente por taller. Cupos limitados.</p>
-    </div>
-
-    <div class="cards-talleres" id="talleres">
-
-      <!-- MSK -->
-      <div class="insc-card card-msk reveal" id="taller-msk">
-        <div class="card-header">
-          <div class="card-accent"></div>
-          <div class="card-icon">🦴</div>
-          <div class="card-tag">Taller Pre-Congreso</div>
-          <div class="card-title">US Musculoesquelético</div>
-          <p class="card-desc">Taller práctico de ultrasonido musculoesquelético. Técnicas avanzadas de diagnóstico por imágenes del aparato locomotor.</p>
-        </div>
-        <div class="card-meta">
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span><strong>Instructor:</strong> Dr. Miguel Rocha · Radiólogo</span>
-          </div>
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span><strong>Modalidad:</strong> Taller presencial · Cupos limitados</span>
-          </div>
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span><strong>Sede:</strong> CMDLT, Caracas</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAt27hi_Qmd-rP8S7pfXnCoucAmFckx18kYdlYUfmEhPfsgQ/viewform?usp=publish-editor" target="_blank" rel="noopener" class="card-btn">
-            Inscribirme — Taller MSK →
-          </a>
-        </div>
+      <div class="card-footer">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdu3aTiO2LyhayzgenybHro77jVibKOGkt-dH7RWjQlzas_GA/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
+          Inscribirme — Congreso Técnicos →
+        </a>
       </div>
-
-      <!-- PULMONAR -->
-      <div class="insc-card card-pulmonar reveal" id="taller-pulmonar">
-        <div class="card-header">
-          <div class="card-accent"></div>
-          <div class="card-icon">🫁</div>
-          <div class="card-tag">Taller Pre-Congreso</div>
-          <div class="card-title">US Pulmonar</div>
-          <p class="card-desc">Taller práctico de ultrasonido pulmonar. Diagnóstico ecográfico del tórax, patología pleural y parenquimatosa.</p>
-        </div>
-        <div class="card-meta">
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span><strong>Instructor:</strong> Dra. Carmen Delgado · Radiólogo</span>
-          </div>
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span><strong>Modalidad:</strong> Taller presencial · Cupos limitados</span>
-          </div>
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span><strong>Sede:</strong> CMDLT, Caracas</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBboMt8ToLwNhwEFbU3p2jYs0cizGo9KpH_n0Nf6OJvURzpg/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
-            Inscribirme — Taller US Pulmonar →
-          </a>
-        </div>
-      </div>
-
-      <!-- MAMOGRAFÍA -->
-      <div class="insc-card card-mamografia reveal" id="taller-mamografia">
-        <div class="card-header">
-          <div class="card-accent"></div>
-          <div class="card-icon">🔮</div>
-          <div class="card-tag">Taller Pre-Congreso</div>
-          <div class="card-title">Posicionamiento Mamario</div>
-          <p class="card-desc">Taller de mamografía y posicionamiento mamario. Dirigido a técnicos radiólogos especializados en diagnóstico mamario.</p>
-        </div>
-        <div class="card-meta">
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            <span><strong>Dirigido a:</strong> Técnicos radiólogos · Diagnóstico mamario</span>
-          </div>
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span><strong>Modalidad:</strong> Taller presencial · Cupos limitados</span>
-          </div>
-          <div class="meta-row">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span><strong>Sede:</strong> CMDLT, Caracas</span>
-          </div>
-        </div>
-        <div class="card-footer">
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLyFhK8RzHXImacz2jw59OU_XgwF9IBRczEXNlX3jMSVTs2w/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
-            Inscribirme — Taller Mamografía →
-          </a>
-        </div>
-      </div>
-
-    </div><!-- /cards-talleres -->
-
-    <!-- NOTA INFO -->
-    <div class="info-box reveal">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <p>
-        <strong>¿Tienes dudas sobre tu inscripción?</strong> Luego de completar el formulario, nuestro equipo te contactará con los datos de pago y confirmación. También puedes escribirnos directamente a
-        <a href="mailto:Trinirad2026@gmail.com">Trinirad2026@gmail.com</a> o al
-        <a href="https://wa.me/584129496249?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20TRINIRAD%202026">WhatsApp</a>.
-        Descuento del <strong>10%</strong> para grupos de 5 o más personas de la misma institución.
-      </p>
     </div>
 
   </div>
-</section>
 
-<!-- FOOTER -->
+  <div class="info-box reveal">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p>Luego de completar el formulario, el equipo te contactará con los datos de pago y confirmación. Dudas: <a href="mailto:Trinirad2026@gmail.com">Trinirad2026@gmail.com</a> · <a href="https://wa.me/584129496249">WhatsApp</a>. Descuento del <strong>10%</strong> para grupos de 5 o más personas.</p>
+  </div>
+</div>
+
+<!-- PANEL TALLERES -->
+<div class="tab-panel" id="panel-talleres">
+  <div class="cards-3col">
+
+    <!-- MSK -->
+    <div class="insc-card c-msk reveal">
+      <div class="card-top-bar"></div>
+      <div class="card-body">
+        <div class="card-icon-row">
+          <div class="card-icon">🦴</div>
+          <div>
+            <div class="card-tag">Taller Pre-Congreso</div>
+            <div class="card-title">US Musculoesquelético</div>
+          </div>
+        </div>
+        <p class="card-desc">Taller práctico de ecografía del aparato locomotor. Tendones, ligamentos, músculos y articulaciones con casos clínicos reales.</p>
+        <div class="card-metas">
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span><strong>Instructor:</strong> Dr. Miguel Rocha · Radiólogo</span>
+          </div>
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span><strong>Modalidad:</strong> Presencial · Cupos limitados</span>
+          </div>
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><strong>Incluye:</strong> Práctica en equipos + certificado</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeAt27hi_Qmd-rP8S7pfXnCoucAmFckx18kYdlYUfmEhPfsgQ/viewform?usp=publish-editor" target="_blank" rel="noopener" class="card-btn">
+          Inscribirme — Taller MSK →
+        </a>
+      </div>
+    </div>
+
+    <!-- Pulmonar -->
+    <div class="insc-card c-pulmonar reveal">
+      <div class="card-top-bar"></div>
+      <div class="card-body">
+        <div class="card-icon-row">
+          <div class="card-icon">🫁</div>
+          <div>
+            <div class="card-tag">Taller Pre-Congreso</div>
+            <div class="card-title">US Pulmonar</div>
+          </div>
+        </div>
+        <p class="card-desc">Ecografía torácica y pulmonar. Diagnóstico de patología pleural, consolidaciones y síndrome intersticial. Protocolo BLUE en urgencias.</p>
+        <div class="card-metas">
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span><strong>Instructor:</strong> Dra. Carmen Delgado · Radiólogo</span>
+          </div>
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span><strong>Modalidad:</strong> Presencial · Cupos limitados</span>
+          </div>
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><strong>Incluye:</strong> Práctica en equipos + certificado</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfBboMt8ToLwNhwEFbU3p2jYs0cizGo9KpH_n0Nf6OJvURzpg/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
+          Inscribirme — Taller US Pulmonar →
+        </a>
+      </div>
+    </div>
+
+    <!-- Mamografía -->
+    <div class="insc-card c-mamografia reveal">
+      <div class="card-top-bar"></div>
+      <div class="card-body">
+        <div class="card-icon-row">
+          <div class="card-icon">🔮</div>
+          <div>
+            <div class="card-tag">Taller Pre-Congreso</div>
+            <div class="card-title">Posicionamiento Mamario</div>
+          </div>
+        </div>
+        <p class="card-desc">Técnicas de posicionamiento mamario para mamografía. Proyecciones estándar y adicionales, control de calidad diagnóstica. Para técnicos radiólogos.</p>
+        <div class="card-metas">
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span><strong>Dirigido a:</strong> Técnicos radiólogos en diagnóstico mamario</span>
+          </div>
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span><strong>Modalidad:</strong> Presencial · Cupos limitados</span>
+          </div>
+          <div class="card-meta-row">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><strong>Incluye:</strong> Práctica guiada + certificado</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLyFhK8RzHXImacz2jw59OU_XgwF9IBRczEXNlX3jMSVTs2w/viewform?usp=header" target="_blank" rel="noopener" class="card-btn">
+          Inscribirme — Taller Mamografía →
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="info-box reveal">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <p>Los talleres son <strong>pre-congreso</strong> e independientes del congreso principal. Puedes combinar un taller con tu inscripción al congreso. Dudas: <a href="mailto:Trinirad2026@gmail.com">Trinirad2026@gmail.com</a> · <a href="https://wa.me/584129496249">WhatsApp</a>.</p>
+  </div>
+</div>
+
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="logo"><span class="trini">trini</span><span class="rad">rad</span></div>
-      <p>IV Congreso de Imagenología 2026 · Caracas, Venezuela</p>
+    <div>
+      <div class="f-logo"><span class="trini">trini</span><span class="rad">rad</span></div>
+      <p style="font-size:.78rem;margin-top:.3rem">IV Congreso de Imagenología 2026 · Caracas, Venezuela</p>
     </div>
-    <div class="footer-links">
+    <div class="f-links">
       <a href="index.html">Inicio</a>
       <a href="index.html#bloques">Programa</a>
       <a href="index.html#ponentes">Ponentes</a>
-      <a href="talleres.html">Talleres</a>
       <a href="index.html#faq">FAQ</a>
       <a href="mailto:Trinirad2026@gmail.com">Contacto</a>
     </div>
   </div>
-  <p class="footer-copy">© 2026 TRINIRAD · Postgrado de Imagenología UC-CMDLT</p>
+  <p class="f-copy">© 2026 TRINIRAD · Postgrado de Imagenología UC-CMDLT</p>
 </footer>
 
-<!-- WA FLOAT -->
 <a href="https://wa.me/584129496249?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20TRINIRAD%202026" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
 </a>
 
 <script>
-// Navbar scroll
-window.addEventListener('scroll',()=>{
-  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40)
+// Tabs
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+function switchTab(tabId) {
+  tabBtns.forEach(b => b.classList.remove('active'));
+  tabPanels.forEach(p => p.classList.remove('active'));
+  document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+  document.getElementById(`panel-${tabId}`).classList.add('active');
+  // re-trigger reveals in new panel
+  document.querySelectorAll(`#panel-${tabId} .reveal`).forEach(el => {
+    el.classList.remove('visible');
+    setTimeout(() => observer.observe(el), 50);
+  });
+}
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
 });
+
+// Auto-switch tab from URL param
+const params = new URLSearchParams(window.location.search);
+const tabParam = params.get('tab');
+if (tabParam === 'talleres') switchTab('talleres');
+
+// Navbar
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
 // Reveal
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible') })
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>

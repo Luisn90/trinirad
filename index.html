@@ -481,6 +481,31 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 .wa-float:hover { transform:scale(1.1) }
 .wa-float svg { width:28px; height:28px; fill:white }
 
+/* ── INSCRIPCIÓN PREVIEW CARDS ── */
+.insc-prev-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: var(--r); padding: 1.5rem;
+  display: flex; flex-direction: column; gap: .5rem;
+  transition: transform .25s, box-shadow .25s;
+}
+.insc-prev-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(106,13,145,0.1) }
+.insc-prev-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.insc-prev-tag { font-size: .68rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase }
+.insc-prev-title { font-size: 1rem; font-weight: 800; color: var(--ink); letter-spacing: -.3px }
+.insc-prev-desc { font-size: .82rem; color: var(--ink-muted); line-height: 1.6; flex: 1 }
+.insc-prev-meta { font-size: .75rem; color: var(--ink-muted); font-weight: 500 }
+.insc-prev-btn {
+  display: flex; align-items: center; justify-content: center;
+  padding: .7rem 1.2rem; border-radius: 99px; font-size: .82rem;
+  font-weight: 700; text-decoration: none; color: var(--white);
+  margin-top: .5rem; transition: all .2s;
+}
+.insc-prev-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15) }
+
 /* ── SCROLL REVEAL ── */
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease, transform .6s ease }
 .reveal.visible { opacity:1; transform:none }
@@ -639,36 +664,87 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   </div>
 </section>
 
-<!-- TALLERES -->
-<section class="section" id="talleres">
+<!-- INSCRIPCIÓN PREVIEW -->
+<section class="section" id="inscripcion-preview">
   <div class="container">
-    <div class="reveal">
-      <div class="s-eyebrow">Pre-Congreso</div>
-      <h2 class="s-title">Talleres especializados</h2>
-      <p class="s-desc">Formación práctica intensiva el día previo al congreso. Cupos limitados — inscripción separada por taller.</p>
+    <div class="reveal" style="text-align:center; margin-bottom:3rem">
+      <div class="s-eyebrow">Inscripción Abierta</div>
+      <h2 class="s-title" style="margin:0 auto .5rem">¿Cómo quieres participar?</h2>
+      <p class="s-desc" style="margin:0 auto 0">Elige entre el congreso principal o los talleres pre-congreso. Puedes combinar ambos.</p>
     </div>
-    <div class="talleres-grid">
-      <div class="taller-card taller-msk reveal">
-        <div class="taller-icon">🦴</div>
-        <div class="taller-name">US Musculoesquelético</div>
-        <div class="taller-doc">Dr. Miguel Rocha · Radiólogo</div>
-        <div class="taller-date">Taller pre-congreso · Cupos limitados</div>
-        <a href="inscripcion.html#taller-msk" class="taller-cta">Inscribirme al taller →</a>
+
+    <!-- CONGRESO CARDS -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1.2rem; margin-bottom:2rem">
+
+      <div class="insc-prev-card reveal" style="border-top:4px solid; border-top-color:var(--violet)">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div class="insc-prev-icon" style="background:rgba(106,13,145,0.08)">🩺</div>
+          <div>
+            <div class="insc-prev-tag" style="color:var(--violet)">Congreso · Médicos</div>
+            <div class="insc-prev-title">Inscripción Médicos</div>
+          </div>
+        </div>
+        <p class="insc-prev-desc">Para radiólogos, residentes, médicos generales y estudiantes de medicina.</p>
+        <div class="insc-prev-meta">📅 26 y 27 Jun · Auditorio Carlos Klemprer</div>
+        <a href="inscripcion.html?tab=congreso" class="insc-prev-btn" style="background:linear-gradient(135deg,var(--violet),var(--red))">Inscribirme →</a>
       </div>
-      <div class="taller-card taller-pulm reveal">
-        <div class="taller-icon">🫁</div>
-        <div class="taller-name">US Pulmonar</div>
-        <div class="taller-doc">Dra. Carmen Delgado · Radiólogo</div>
-        <div class="taller-date">Taller pre-congreso · Cupos limitados</div>
-        <a href="inscripcion.html#taller-pulmonar" class="taller-cta">Inscribirme al taller →</a>
+
+      <div class="insc-prev-card reveal" style="border-top:4px solid; border-top-color:var(--teal)">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div class="insc-prev-icon" style="background:rgba(0,114,140,0.08)">⚙️</div>
+          <div>
+            <div class="insc-prev-tag" style="color:var(--teal)">Congreso · Técnicos</div>
+            <div class="insc-prev-title">Inscripción Técnicos</div>
+          </div>
+        </div>
+        <p class="insc-prev-desc">Para técnicos radiólogos, licenciados en imagenología y tecnólogos médicos.</p>
+        <div class="insc-prev-meta">📅 26 y 27 Jun · Auditorio Carlos Klemprer</div>
+        <a href="inscripcion.html?tab=congreso" class="insc-prev-btn" style="background:linear-gradient(135deg,var(--teal),var(--cyan))">Inscribirme →</a>
       </div>
-      <div class="taller-card taller-mamo reveal">
-        <div class="taller-icon">🔮</div>
-        <div class="taller-name">Posicionamiento Mamario</div>
-        <div class="taller-doc">Jornada de técnicos radiólogos</div>
-        <div class="taller-date">Taller pre-congreso · Cupos limitados</div>
-        <a href="inscripcion.html#taller-mamografia" class="taller-cta">Inscribirme al taller →</a>
+
+      <div class="insc-prev-card reveal" style="border-top:4px solid; border-top-color:var(--red)">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div class="insc-prev-icon" style="background:rgba(214,0,54,0.08)">🦴</div>
+          <div>
+            <div class="insc-prev-tag" style="color:var(--red)">Taller · Pre-Congreso</div>
+            <div class="insc-prev-title">US Musculoesquelético</div>
+          </div>
+        </div>
+        <p class="insc-prev-desc">Taller práctico con Dr. Miguel Rocha. Diagnóstico ecográfico del aparato locomotor.</p>
+        <div class="insc-prev-meta">⚡ Cupos limitados</div>
+        <a href="inscripcion.html?tab=talleres" class="insc-prev-btn" style="background:linear-gradient(135deg,var(--red),var(--orange))">Inscribirme →</a>
       </div>
+
+      <div class="insc-prev-card reveal" style="border-top:4px solid; border-top-color:var(--cyan)">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div class="insc-prev-icon" style="background:rgba(0,198,204,0.08)">🫁</div>
+          <div>
+            <div class="insc-prev-tag" style="color:var(--teal)">Taller · Pre-Congreso</div>
+            <div class="insc-prev-title">US Pulmonar</div>
+          </div>
+        </div>
+        <p class="insc-prev-desc">Taller práctico con Dra. Carmen Delgado. Ecografía torácica y patología pleural.</p>
+        <div class="insc-prev-meta">⚡ Cupos limitados</div>
+        <a href="inscripcion.html?tab=talleres" class="insc-prev-btn" style="background:linear-gradient(135deg,var(--teal),var(--cyan))">Inscribirme →</a>
+      </div>
+
+      <div class="insc-prev-card reveal" style="border-top:4px solid; border-top-color:#C0579A">
+        <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem">
+          <div class="insc-prev-icon" style="background:rgba(106,13,145,0.08)">🔮</div>
+          <div>
+            <div class="insc-prev-tag" style="color:var(--violet)">Taller · Pre-Congreso</div>
+            <div class="insc-prev-title">Posicionamiento Mamario</div>
+          </div>
+        </div>
+        <p class="insc-prev-desc">Taller para técnicos radiólogos. Técnicas de mamografía y diagnóstico mamario.</p>
+        <div class="insc-prev-meta">⚡ Cupos limitados</div>
+        <a href="inscripcion.html?tab=talleres" class="insc-prev-btn" style="background:linear-gradient(135deg,var(--violet),#C0579A)">Inscribirme →</a>
+      </div>
+
+    </div>
+
+    <div class="reveal" style="text-align:center; margin-top:1rem">
+      <a href="inscripcion.html" class="btn btn-primary">Ver todas las opciones de inscripción →</a>
     </div>
   </div>
 </section>

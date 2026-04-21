@@ -246,25 +246,62 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 
 /* ── PONENTES ── */
 .ponentes-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
   margin-top: 2rem;
 }
 .ponente-card {
-  background: var(--white); border: 1.5px solid var(--border);
-  border-radius: var(--r); padding: 1.5rem 1rem; text-align:center;
-  transition: all .25s;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  text-align: center;
+  transition: all .3s;
+  position: relative;
 }
 .ponente-card:hover {
-  border-color: var(--violet); transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(106,13,145,0.1);
+  border-color: var(--violet);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(106,13,145,0.13);
 }
+/* photo area — square top half */
+.pon-img-wrap {
+  width: 100%; aspect-ratio: 1/1;
+  overflow: hidden; position: relative;
+  background: var(--off);
+}
+.pon-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block; transition: transform .4s;
+}
+.ponente-card:hover .pon-img-wrap img { transform: scale(1.05) }
+/* avatar fallback — full square */
 .pon-avatar {
-  width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 1rem;
-  display: flex; align-items:center; justify-content:center;
-  font-weight: 800; font-size: 1.1rem; color: var(--white);
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 2.2rem; color: var(--white);
 }
-.pon-name { font-weight: 700; font-size: .82rem; color: var(--ink); margin-bottom: 3px }
-.pon-spec { font-size: .7rem; color: var(--ink-muted) }
+/* gradient overlay on image */
+.pon-img-wrap::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 50%);
+  pointer-events: none;
+}
+/* text area */
+.pon-info {
+  padding: 1rem 1rem 1.2rem;
+  border-top: 1px solid var(--border);
+}
+.pon-name {
+  font-weight: 800; font-size: .92rem;
+  color: var(--ink); margin-bottom: 4px; line-height: 1.3;
+}
+.pon-spec {
+  font-size: .75rem; color: var(--ink-muted); font-weight: 500;
+}
 
 /* ── TALLERES ── */
 .talleres-grid {
@@ -511,12 +548,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 
 /* ── PONENTE CARD WITH PHOTO ── */
-.pon-photo {
-  width: 80px; height: 80px; border-radius: 50%;
-  object-fit: cover; margin: 0 auto .8rem;
-  border: 3px solid var(--border);
-  display: block;
-}
+/* pon-photo handled by .pon-img-wrap */
 
 /* ── SCROLL REVEAL ── */
 .reveal { opacity:0; transform:translateY(28px); transition:opacity .6s ease, transform .6s ease }
@@ -1025,8 +1057,17 @@ const ponentes = [
 const pgrid = document.getElementById('ponentes-grid');
 ponentes.forEach((p,i) => {
   const initials = p.name.replace('Dr. ','').replace('Dra. ','').split(' ').slice(0,2).map(w=>w[0]).join('');
-  const av = p.foto ? `<img src="${p.foto}" alt="${p.name}" class="pon-photo">` : `<div class="pon-avatar" style="background:${p.color}">${initials}</div>`;
-  pgrid.innerHTML += `<div class="ponente-card reveal" style="animation-delay:${i*0.05}s">${av}<div class="pon-name">${p.name}</div><div class="pon-spec">${p.spec}</div></div>`;
+  const imgContent = p.foto
+    ? `<img src="${p.foto}" alt="${p.name}">`
+    : `<div class="pon-avatar" style="background:${p.color}">${initials}</div>`;
+  pgrid.innerHTML += `
+    <div class="ponente-card reveal" style="animation-delay:${i*0.05}s">
+      <div class="pon-img-wrap">${imgContent}</div>
+      <div class="pon-info">
+        <div class="pon-name">${p.name}</div>
+        <div class="pon-spec">${p.spec}</div>
+      </div>
+    </div>`;
 });
 
 // ── FAQ ──

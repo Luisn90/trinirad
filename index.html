@@ -99,7 +99,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   display: flex; align-items: center; justify-content: center;
   padding: 8rem 1.5rem 5rem;
   position: relative; overflow: hidden;
-  background: #0a0a12;
+  background: #08081A;
 }
 
 /* Wave canvas background */
@@ -932,50 +932,51 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 </a>
 
 <script>
-// ── HERO WAVE CANVAS ──
+// ── HERO MESH GRADIENT (stripe-style) ──
 (function(){
   const canvas = document.getElementById('hero-canvas');
   const ctx    = canvas.getContext('2d');
-  let W, H, t = 0;
+  let W, H;
 
-  const WAVES = [
-    { color:'rgba(106,13,145,0.55)',  speed:0.0008, amp:0.13, freq:1.8,  y:0.55, thick:180 },
-    { color:'rgba(214,0,54,0.45)',    speed:0.0011, amp:0.10, freq:2.3,  y:0.62, thick:160 },
-    { color:'rgba(245,106,0,0.40)',   speed:0.0007, amp:0.12, freq:1.5,  y:0.70, thick:200 },
-    { color:'rgba(0,198,204,0.38)',   speed:0.0013, amp:0.09, freq:2.8,  y:0.48, thick:150 },
-    { color:'rgba(0,114,140,0.42)',   speed:0.0009, amp:0.11, freq:2.1,  y:0.78, thick:170 },
-    { color:'rgba(255,215,0,0.22)',   speed:0.0015, amp:0.07, freq:3.2,  y:0.40, thick:120 },
+  // Each orb: color, position (0-1), size, movement speed & phase
+  const ORBS = [
+    { r:106, g:13,  b:145, x:.15, y:.35, s:.55, sx:.00018, sy:.00012, px:0,    py:2.1  },
+    { r:214, g:0,   b:54,  x:.75, y:.20, s:.50, sx:.00014, sy:.00017, px:1.2,  py:0.7  },
+    { r:0,   g:198, b:204, x:.80, y:.75, s:.52, sx:.00020, sy:.00011, px:2.4,  py:3.5  },
+    { r:245, g:106, b:0,   x:.40, y:.80, s:.45, sx:.00016, sy:.00019, px:3.8,  py:1.1  },
+    { r:0,   g:114, b:140, x:.55, y:.15, s:.48, sx:.00012, sy:.00015, px:0.9,  py:4.2  },
+    { r:180, g:0,   b:100, x:.25, y:.65, s:.40, sx:.00022, sy:.00013, px:5.1,  py:2.8  },
   ];
 
   function resize(){
     W = canvas.width  = window.innerWidth;
-    H = canvas.height = canvas.parentElement.offsetHeight;
+    H = canvas.height = canvas.parentElement.offsetHeight || window.innerHeight;
   }
   window.addEventListener('resize', resize);
   resize();
 
-  function drawWave(w){
-    ctx.beginPath();
-    ctx.moveTo(0, H);
-    for(let x = 0; x <= W; x += 3){
-      const y = H * w.y + Math.sin(x * w.freq / W * Math.PI * 2 + t * w.speed * 1000) * H * w.amp
-                        + Math.sin(x * w.freq * 1.7 / W * Math.PI * 2 - t * w.speed * 800) * H * w.amp * 0.4;
-      ctx.lineTo(x, y);
-    }
-    ctx.lineTo(W, H); ctx.lineTo(0, H);
-    ctx.closePath();
-    ctx.fillStyle = w.color;
-    ctx.fill();
-  }
-
-  let last = 0;
   function frame(ts){
-    t = ts;
-    ctx.clearRect(0, 0, W, H);
-    // dark base
-    ctx.fillStyle = '#0a0a12';
+    const t = ts * 0.001;
+
+    // Dark base — deep navy, not pure black
+    ctx.fillStyle = '#08081A';
     ctx.fillRect(0, 0, W, H);
-    WAVES.forEach(w => drawWave(w));
+
+    ORBS.forEach(o => {
+      // slow sinusoidal drift
+      const cx = (o.x + Math.sin(t * o.sx * 1000 + o.px) * 0.22) * W;
+      const cy = (o.y + Math.cos(t * o.sy * 1000 + o.py) * 0.18) * H;
+      const radius = o.s * Math.max(W, H) * 0.65;
+
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+      grad.addColorStop(0,   `rgba(${o.r},${o.g},${o.b},0.38)`);
+      grad.addColorStop(0.4, `rgba(${o.r},${o.g},${o.b},0.18)`);
+      grad.addColorStop(1,   `rgba(${o.r},${o.g},${o.b},0)`);
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+    });
+
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

@@ -253,6 +253,101 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 .b-tecnicos     { background: linear-gradient(135deg,#6A0D91,#D60036) }
 .b-mamografia   { background: linear-gradient(135deg,#C0579A,#6A0D91) }
 
+
+/* ── PROGRAMA INTERACTIVO ── */
+.prog-tabs-wrap {
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none; -ms-overflow-style: none;
+  margin: 0 -1rem; padding: 0 1rem;
+}
+.prog-tabs-wrap::-webkit-scrollbar { display: none }
+#prog-tabs {
+  display: flex; gap: .5rem;
+  width: max-content; min-width: 100%;
+  padding-bottom: .5rem;
+}
+.prog-tab {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .55rem 1.1rem; border-radius: 99px;
+  border: 1.5px solid var(--border);
+  background: var(--white); cursor: pointer;
+  font-family: var(--font); font-size: .78rem; font-weight: 600;
+  color: var(--ink-soft); white-space: nowrap;
+  transition: all .2s;
+}
+.prog-tab.active {
+  border-color: var(--tab-color);
+  color: var(--tab-color);
+  background: color-mix(in srgb, var(--tab-color) 6%, white);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--tab-color) 20%, transparent);
+}
+.prog-tab:hover:not(.active) { border-color: var(--ink-muted); color: var(--ink) }
+
+/* coordinator */
+.prog-coord {
+  display: flex; gap: 1.5rem; align-items: center;
+  background: var(--off); border-radius: 16px;
+  padding: 1.2rem; margin-bottom: 2rem;
+  border: 1.5px solid var(--border);
+}
+.prog-coord-photo {
+  width: 80px; height: 80px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+  border: 3px solid var(--white);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.prog-coord-badge {
+  display: inline-block; font-size: .62rem; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: #fff; padding: .2rem .7rem; border-radius: 99px;
+  margin-bottom: .4rem;
+}
+.prog-coord-name { font-weight: 800; font-size: 1rem; color: var(--ink); margin-bottom: .3rem }
+.prog-coord-bio  { font-size: .78rem; color: var(--ink-muted); line-height: 1.5 }
+
+/* ponentes label */
+.prog-ponentes-label {
+  font-size: .7rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--ink-muted);
+  margin-bottom: 1rem;
+}
+
+/* ponentes grid */
+.prog-ponentes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+.prog-ponente-card {
+  border-radius: 14px; overflow: hidden;
+  border: 1.5px solid var(--border); background: var(--white);
+  transition: transform .25s, box-shadow .25s;
+}
+.prog-ponente-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1) }
+.prog-ponente-photo {
+  width: 100%; aspect-ratio: 1/1; overflow: hidden;
+  background: var(--off);
+}
+.prog-ponente-info { padding: .9rem }
+.prog-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .62rem; font-weight: 700; padding: .18rem .55rem;
+  border-radius: 99px; margin-bottom: .5rem;
+}
+.prog-badge-online { background: rgba(0,114,140,0.1); color: var(--teal) }
+.prog-badge-pres   { background: rgba(106,13,145,0.08); color: var(--violet) }
+.prog-ponente-name   { font-weight: 800; font-size: .85rem; color: var(--ink); margin-bottom: .2rem }
+.prog-ponente-pais   { font-size: .7rem; color: var(--ink-muted); margin-bottom: .4rem }
+.prog-ponente-titulo { font-size: .75rem; color: var(--ink-soft); line-height: 1.4; font-style: italic }
+
+@media(max-width:600px){
+  .prog-coord { flex-direction: column; text-align: center; }
+  .prog-ponentes-grid { grid-template-columns: repeat(2, 1fr) }
+}
+@media(max-width:380px){
+  .prog-ponentes-grid { grid-template-columns: 1fr }
+}
+
 /* ── PONENTES ── */
 .ponentes-grid {
   display: grid;
@@ -704,28 +799,19 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   </div>
 </div>
 
-<!-- BLOQUES TEMÁTICOS -->
+<!-- PROGRAMA INTERACTIVO -->
 <section class="section" id="bloques">
   <div class="container">
     <div class="reveal">
       <div class="s-eyebrow">Programa Científico</div>
       <h2 class="s-title">Bloques temáticos</h2>
-      <p class="s-desc">Contenido para estudiantes, médicos residentes y especialistas en imagenología. Ponencias de alto nivel en 9 áreas de la radiología.</p>
+      <p class="s-desc">Selecciona un bloque para ver el coordinador y los ponentes confirmados.</p>
     </div>
-    <div class="bloques-grid">
-      <div class="bloque-card b-oncologia reveal">🔬 Oncología</div>
-      <div class="bloque-card b-mastologia reveal">🩺 Mastología</div>
-      <div class="bloque-card b-innovacion reveal">💡 Innovación</div>
-      <div class="bloque-card b-neurologia reveal">🧠 Neurología</div>
-      <div class="bloque-card b-emergencia reveal">🚨 Emergencia</div>
-      <div class="bloque-card b-abdomen reveal">🫀 Abdomen</div>
-      <div class="bloque-card b-pediatria reveal">👶 Pediatría</div>
-      <div class="bloque-card b-msk reveal">🦴 MSK</div>
-      <div class="bloque-card b-torax reveal">🫁 Tórax</div>
-      <div class="bloque-card b-tecnicos reveal">⚙️ Jornada Técnicos/Lic.</div>
-      <div class="bloque-card b-mamografia reveal">🔮 Posicionamiento Mamario</div>
+    <div class="prog-tabs-wrap reveal">
+      <div id="prog-tabs"></div>
     </div>
-    <div style="text-align:center; margin-top:2.5rem" class="reveal">
+    <div id="prog-body" style="margin-top:1.5rem"></div>
+    <div style="text-align:center;margin-top:2rem" class="reveal">
       <a href="inscripcion.html" class="btn btn-primary">Reserva tu cupo →</a>
     </div>
   </div>
@@ -1199,6 +1285,158 @@ ponentes.forEach((p,i) => {
       </div>
     </div>`;
 });
+
+
+// ── PROGRAMA DATA ──
+const PROGRAMA = {
+  mama: {
+    label: 'Mama', icon: '🩺', color: '#6A0D91',
+    coordinadora: { nombre: 'Dra. Alcira Capecchi', cargo: 'Coordinadora · Bloque Mama', bio: 'Médico Radiólogo Especialista en Imágenes Mamarias. Médico CMDLT.', initials: 'AC', foto: null },
+    ponentes: [
+      { nombre: 'Dra. Edirly Valencia',  pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Ultrasonido mamario BI-RADS v2025' },
+      { nombre: 'Dra. Exaida Molero',    pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Mamografía BI-RADS v2025' },
+      { nombre: 'Dra. Anita Santiago',   pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Resonancia magnética BI-RADS v2025' },
+      { nombre: 'Dra. Rosaura Fuentes',  pais: '🇲🇽 México',    modalidad: 'Online',     titulo: 'Mamografía contrastada BI-RADS v2025' },
+    ]
+  },
+  msk: {
+    label: 'MSK', icon: '🦴', color: '#D60036',
+    coordinadora: { nombre: 'Dr. Miguel Rocha', cargo: 'Coordinador · Bloque MSK', bio: 'Médico Radiólogo Especialista en Imágenes Musculoesqueléticas y Mamarias. Médico CMDLT.', initials: 'MR', foto: 'organizador_rocha.webp' },
+    ponentes: [
+      { nombre: 'Dr. Seijiro Yazawa',   pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Ecografía en la pubalgia' },
+      { nombre: 'Dra. Norma Pedreañez', pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Por confirmar' },
+      { nombre: 'Dra. Sandra Payares',  pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Evaluación musculoesquelética por US en niños' },
+      { nombre: 'Dra. Nohelia Silva',   pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Una mirada ecográfica a los músculos isquiotibiales' },
+    ]
+  },
+  pediatria: {
+    label: 'Pediatría', icon: '👶', color: '#F56A00',
+    coordinadora: { nombre: 'Dra. Ivonne Rodríguez', cargo: 'Coordinadora · Bloque Pediatría', bio: 'Médico Radiólogo Especialista en Imagenología Pediátrica. Directora del Postgrado de Imagenología UC-CMDLT.', initials: 'IR', foto: null },
+    ponentes: [
+      { nombre: 'Dra. Antonietta Ramos', pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Pequeños pacientes, grandes hallazgos: tesoros de nuestra casuística' },
+      { nombre: 'Dra. Felizia Restrepo', pais: '🇨🇴 Colombia',  modalidad: 'Online',     titulo: 'Facomatosis del SNC' },
+      { nombre: 'Dra. Gabriela Sosa',    pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Estreñimiento refractario en pediatría: cuando la radiología toma el control' },
+      { nombre: 'Dra. Marianella Patiño',pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'US pélvico en pubertad precoz', foto: 'ponente_patino.webp' },
+    ]
+  },
+  neurologia: {
+    label: 'Neurología', icon: '🧠', color: '#E69500',
+    coordinadora: { nombre: 'Dra. Vivian Hernández', cargo: 'Coordinadora · Bloque Neurología', bio: 'Médico Radiólogo Especialista en Neuro-radiología Intervencionista (Univ. Puerto Rico). Coordinadora del Postgrado UC-CMDLT.', initials: 'VH', foto: null },
+    ponentes: [
+      { nombre: 'Dra. Mariangela Alvarado', pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Recidiva vs. Radionecrosis: Perfusión y espectroscopia como herramientas claves' },
+      { nombre: 'Dr. Pablo Aure',           pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Patrones, signos y dilemas en enfermedades desmielinizantes' },
+      { nombre: 'Dr. Herman Scholtz',       pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Checklist del neurocirujano en estenosis del canal espinal' },
+      { nombre: 'Dr. Bernardo Lander',      pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Hipotensión endocraneana desde el punto de vista radiológico' },
+    ]
+  },
+  torax: {
+    label: 'Tórax / Abdomen', icon: '🫁', color: '#00728C',
+    coordinadora: { nombre: 'Dr. Salvador Malavé', cargo: 'Coordinador · Bloque Tórax y Abdomen', bio: 'Médico Radiólogo Especialista en Radiología Intervencionista. Médico CMDLT.', initials: 'SM', foto: 'organizador_malave.webp' },
+    ponentes: [
+      { nombre: 'Dra. María Manuela Tirri', pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Pasado, presente y futuro: Enfermedad pulmonar intersticial' },
+      { nombre: 'Dra. María Elena Savino', pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Endometriosis profunda por resonancia magnética' },
+      { nombre: 'Dra. Cecilia Matheus',    pais: '🇻🇪 Venezuela', modalidad: 'Online',     titulo: 'Cardioresonancia' },
+    ]
+  },
+  emergencias: {
+    label: 'Emergencias', icon: '🚨', color: '#C0579A',
+    coordinadora: { nombre: 'Dra. Verónica Hernández', cargo: 'Coordinadora · Bloque Emergencias', bio: 'Médico Radiólogo Especialista en Neuro-radiología Intervencionista (Univ. Puerto Rico). Médico CMDLT.', initials: 'VH2', foto: null },
+    ponentes: [
+      { nombre: 'Dr. Manuel Fernández',  pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Inteligencia artificial aplicada a la radiología de emergencia' },
+      { nombre: 'Dra. Edirly Valencia',  pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Eco FAST' },
+      { nombre: 'Dra. Cecilia Ferrario', pais: '🇦🇷 Argentina', modalidad: 'Online',     titulo: 'Emergencias torácicas por tomografía' },
+      { nombre: 'Dr. Jonathan Camacho',  pais: '🇲🇽 México',    modalidad: 'Presencial', titulo: 'De la imagen a la decisión: claves críticas en ictus' },
+    ]
+  },
+  oncologia: {
+    label: 'Oncología', icon: '🔬', color: '#00728C',
+    coordinadora: { nombre: 'Dr. Carlos Guinand', cargo: 'Coordinador · Bloque Oncología', bio: 'Médico Radiólogo Especialista en Imágenes Musculoesqueléticas e Intervencionismo. Médico CMDLT.', initials: 'CG', foto: 'organizador_guinand.webp' },
+    ponentes: [
+      { nombre: 'Dr. Yonathan Almeida',     pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Por confirmar' },
+      { nombre: 'Dr. Alejandro Tempra',     pais: '🇦🇷 Argentina', modalidad: 'Online',     titulo: 'RM con contraste hepatoespecífico', foto: 'ponente_tempra.webp' },
+      { nombre: 'Dra. Aisa Manzo',          pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Qué hay de nuevo en CT-PET: FAPi como nuevo radioligando' },
+      { nombre: 'Dra. María José Sarmiento',pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Por confirmar' },
+    ]
+  },
+  innovacion: {
+    label: 'Innovación', icon: '💡', color: '#1A7A3A',
+    coordinadora: { nombre: 'Dr. Carlos Guinand', cargo: 'Coordinador · Bloque Innovación', bio: 'Médico Radiólogo Especialista en Imágenes Musculoesqueléticas e Intervencionismo. Médico CMDLT.', initials: 'CG', foto: 'organizador_guinand.webp' },
+    ponentes: [
+      { nombre: 'Dra. Hildamari Atienza', pais: '🇻🇪 Venezuela', modalidad: 'Online',     titulo: 'Tomografía espectral' },
+      { nombre: 'Dr. Omar Arias',         pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'IA en imagenología oncológica: análisis de frontera tumoral' },
+      { nombre: 'Dr. Cesar Pru',          pais: '🇻🇪 Venezuela', modalidad: 'Presencial', titulo: 'Creatinina y medios de contraste: Mitos y realidades' },
+    ]
+  },
+};
+
+// ── RENDER PROGRAMA ──
+(function(){
+  const tabsEl  = document.getElementById('prog-tabs');
+  const bodyEl  = document.getElementById('prog-body');
+  const keys    = Object.keys(PROGRAMA);
+  let activeKey = keys[0];
+
+  function coordCard(b) {
+    const c = b.coordinadora;
+    const av = c.foto
+      ? `<img src="${c.foto}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">`
+      : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.4rem;color:#fff;background:${b.color}">${c.initials}</div>`;
+    return `
+      <div class="prog-coord">
+        <div class="prog-coord-photo">${av}</div>
+        <div class="prog-coord-info">
+          <div class="prog-coord-badge" style="background:${b.color}">Coordinador/a</div>
+          <div class="prog-coord-name">${c.nombre}</div>
+          <div class="prog-coord-bio">${c.bio}</div>
+        </div>
+      </div>`;
+  }
+
+  function ponenteCard(p, color) {
+    const modalBadge = p.modalidad === 'Online'
+      ? `<span class="prog-badge prog-badge-online">🌐 Online</span>`
+      : `<span class="prog-badge prog-badge-pres">📍 Presencial</span>`;
+    const av = p.foto
+      ? `<img src="${p.foto}" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">`
+      : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;color:#fff;background:${color}">${p.nombre.replace('Dr. ','').replace('Dra. ','').split(' ').slice(0,2).map(w=>w[0]).join('')}</div>`;
+    return `
+      <div class="prog-ponente-card">
+        <div class="prog-ponente-photo">${av}</div>
+        <div class="prog-ponente-info">
+          ${modalBadge}
+          <div class="prog-ponente-name">${p.nombre}</div>
+          <div class="prog-ponente-pais">${p.pais}</div>
+          <div class="prog-ponente-titulo">${p.titulo}</div>
+        </div>
+      </div>`;
+  }
+
+  function render(key) {
+    activeKey = key;
+    const b = PROGRAMA[key];
+
+    // update tabs
+    tabsEl.querySelectorAll('.prog-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.key === key);
+      t.style.setProperty('--tab-color', t.dataset.key === key ? b.color : 'transparent');
+    });
+
+    bodyEl.innerHTML = coordCard(b) +
+      `<div class="prog-ponentes-label">Ponentes del bloque</div>` +
+      `<div class="prog-ponentes-grid">${b.ponentes.map(p => ponenteCard(p, b.color)).join('')}</div>`;
+  }
+
+  // build tabs
+  tabsEl.innerHTML = keys.map(k => {
+    const b = PROGRAMA[k];
+    return `<button class="prog-tab" data-key="${k}" onclick="renderBloque('${k}')" style="--tab-color:transparent">
+      <span>${b.icon}</span><span>${b.label}</span>
+    </button>`;
+  }).join('');
+
+  window.renderBloque = render;
+  render(activeKey);
+})();
 
 // ── FAQ ──
 document.querySelectorAll('.faq-item').forEach(item => {

@@ -141,8 +141,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 
 /* ── HERO ── */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.5rem 3rem;position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(106,13,145,0.22) 0%,rgba(214,0,54,0.16) 18%,rgba(245,106,0,0.12) 32%,rgba(0,198,204,0.08) 48%,rgba(255,255,255,0) 70%,rgba(255,255,255,0) 100%),linear-gradient(135deg,rgba(106,13,145,0.10) 0%,rgba(0,114,140,0.07) 50%,rgba(0,198,204,0.05) 100%),#ffffff}
-.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:780px;width:100%;gap:0}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.5rem 3rem;position:relative;overflow:hidden;background:#ffffff;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:780px;width:100%;gap:0}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(106,13,145,0.18);background:rgba(106,13,145,0.04);padding:.4rem 1.2rem;border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--violet);margin-bottom:2rem}
 .hero-eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -768,7 +767,8 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 
 <!-- HERO -->
 <section class="hero" id="inicio">
-  <div class="hero-inner reveal">
+  <canvas id="wg-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0"></canvas>
+  <div class="hero-inner reveal" style="position:relative;z-index:2">
     <div class="hero-eyebrow">IV Edición · Caracas 2026</div>
     <img src="logo_negro.webp" alt="TRINIRAD 2026" class="hero-logo-img">
     <p class="hero-tagline">"Innovación que trasciende el diagnóstico"</p>
@@ -1190,6 +1190,117 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 </a>
 
 <script>
+// ── WAVE GRADIENT SHADER (TRINIRAD hero) ──
+(function(){
+  const canvas = document.getElementById('wg-canvas');
+  if(!canvas) return;
+  const gl = canvas.getContext('webgl',{antialias:true,alpha:false});
+  if(!gl) return;
+
+  let W, H;
+  function resize(){
+    W = canvas.width  = canvas.offsetWidth  || window.innerWidth;
+    H = canvas.height = canvas.offsetHeight || window.innerHeight;
+    gl.viewport(0,0,W,H);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const VS = `attribute vec2 a; void main(){gl_Position=vec4(a,0.,1.);}`;
+  const FS = `
+    precision highp float;
+    uniform float u_t,u_speed,u_fx,u_fy,u_amp,u_angle,u_soft,u_blend,u_seed;
+    uniform vec3 u_c1,u_c2,u_c3,u_c4,u_c5;
+    uniform vec2 u_res;
+    vec3 permute(vec3 x){return mod(((x*34.)+1.)*x,289.);}
+    float snoise(vec2 v){
+      const vec4 C=vec4(.211324865405187,.366025403784439,-.577350269189626,.024390243902439);
+      vec2 i=floor(v+dot(v,C.yy)),x0=v-i+dot(i,C.xx);
+      vec2 i1=(x0.x>x0.y)?vec2(1.,0.):vec2(0.,1.);
+      vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;
+      i=mod(i,289.);
+      vec3 p=permute(permute(i.y+vec3(0.,i1.y,1.))+i.x+vec3(0.,i1.x,1.));
+      vec3 m=max(.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.);
+      m=m*m*m*m;
+      vec3 x=2.*fract(p*C.www)-1.,h=abs(x)-.5,ox=floor(x+.5),a0=x-ox;
+      m*=1.79284291400159-.85373472095314*(a0*a0+h*h);
+      vec3 g;g.x=a0.x*x0.x+h.x*x0.y;g.yz=a0.yz*x12.xz+h.yz*x12.yw;
+      return 130.*dot(m,g);
+    }
+    vec3 pal(float t){
+      t=clamp(t*.5+.5,0.,1.)*4.;
+      int i=int(t);float f=fract(t);
+      if(i==0)return mix(u_c5,u_c1,f);
+      if(i==1)return mix(u_c1,u_c2,f);
+      if(i==2)return mix(u_c2,u_c3,f);
+      return mix(u_c3,u_c4,f);
+    }
+    void main(){
+      vec2 uv=gl_FragCoord.xy/u_res;uv.y=1.-uv.y;
+      float ca=cos(u_angle),sa=sin(u_angle);
+      vec2 ruv=vec2(ca*uv.x-sa*uv.y,sa*uv.x+ca*uv.y);
+      float seed=u_seed*.1,t=u_t*u_speed*.12;
+      float n1=snoise(vec2(ruv.x*u_fx+t+seed,ruv.y*u_fy-t*.7+seed));
+      float n2=snoise(vec2(ruv.x*u_fx*.7-t*.5+seed*1.3,ruv.y*u_fy*1.4+t+seed));
+      float n3=snoise(vec2(ruv.x*u_fx*1.5+t*.3+seed*.7,ruv.y*u_fy*.6-t*1.2+seed*1.7));
+      float n4=snoise(vec2(ruv.x*u_fx*.5-t*.2+seed*2.,ruv.y*u_fy*2.+t*.4+seed*.5));
+      float n=(n1*.45+n2*.3+n3*.15+n4*.1)*(u_amp*.25);
+      float sn=snoise(vec2(ruv.x*1.5+t*.3,ruv.y*2.-t*.2))*.12;
+      n=mix(n,n+sn,u_soft*.25);
+      vec3 col=pal(n);
+      float fade=smoothstep(.38-.1*u_blend,.75+.1*u_blend,uv.y);
+      col=mix(col,u_c5,fade*u_blend);
+      float vign=1.-smoothstep(.65,1.2,length((uv-.5)*1.5));
+      col=mix(u_c5,col,vign*.9+.1);
+      gl_FragColor=vec4(col,1.);
+    }
+  `;
+  function mkS(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  const prog=gl.createProgram();
+  gl.attachShader(prog,mkS(gl.VERTEX_SHADER,VS));
+  gl.attachShader(prog,mkS(gl.FRAGMENT_SHADER,FS));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const al=gl.getAttribLocation(prog,'a');
+  gl.enableVertexAttribArray(al);gl.vertexAttribPointer(al,2,gl.FLOAT,false,0,0);
+  const U={
+    t:gl.getUniformLocation(prog,'u_t'), res:gl.getUniformLocation(prog,'u_res'),
+    speed:gl.getUniformLocation(prog,'u_speed'), fx:gl.getUniformLocation(prog,'u_fx'),
+    fy:gl.getUniformLocation(prog,'u_fy'),       amp:gl.getUniformLocation(prog,'u_amp'),
+    angle:gl.getUniformLocation(prog,'u_angle'), soft:gl.getUniformLocation(prog,'u_soft'),
+    blend:gl.getUniformLocation(prog,'u_blend'), seed:gl.getUniformLocation(prog,'u_seed'),
+    c1:gl.getUniformLocation(prog,'u_c1'), c2:gl.getUniformLocation(prog,'u_c2'),
+    c3:gl.getUniformLocation(prog,'u_c3'), c4:gl.getUniformLocation(prog,'u_c4'),
+    c5:gl.getUniformLocation(prog,'u_c5'),
+  };
+  // TRINIRAD params — edit these to match your configurator output
+  const P={
+    speed:0.84, fx:2.5, fy:6.0, amp:3.0,
+    angle:-54*Math.PI/180, soft:1.67, blend:0.74, seed:27,
+    c1:[106/255,13/255,145/255],   // #6A0D91 violet
+    c2:[214/255,0,54/255],         // #D60036 red
+    c3:[0,198/255,204/255],        // #00C6CC cyan
+    c4:[245/255,106/255,0],        // #F56A00 orange
+    c5:[1,1,1],                    // #FFFFFF white base
+  };
+  function frame(ts){
+    resize();
+    gl.uniform1f(U.t,ts*.001); gl.uniform2f(U.res,W,H);
+    gl.uniform1f(U.speed,P.speed); gl.uniform1f(U.fx,P.fx);
+    gl.uniform1f(U.fy,P.fy);       gl.uniform1f(U.amp,P.amp);
+    gl.uniform1f(U.angle,P.angle); gl.uniform1f(U.soft,P.soft);
+    gl.uniform1f(U.blend,P.blend); gl.uniform1f(U.seed,P.seed);
+    gl.uniform3fv(U.c1,P.c1); gl.uniform3fv(U.c2,P.c2);
+    gl.uniform3fv(U.c3,P.c3); gl.uniform3fv(U.c4,P.c4);
+    gl.uniform3fv(U.c5,P.c5);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
 // ── COUNTDOWN ──DOWN ──
 function updateCountdown(){
   const target = new Date('2026-06-26T08:00:00-04:00');

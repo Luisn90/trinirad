@@ -1278,29 +1278,26 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   };
   // TRINIRAD params — edit these to match your configurator output
   const P={
-    speed:0.96, amp:2.7,
-    angle:-5*Math.PI/180, soft:0.1, blend:1.0, seed:41,
+    amp:3.2, angle:6*Math.PI/180, soft:0.01, blend:1.0, seed:41,
     c1:[1,1,1],
-    c2:[0xAD/255,0xE7/255,1],
-    c3:[0x1A/255,0x90/255,1],
+    c2:[0xAD/255,0xD5/255,1],
+    c3:[0x3D/255,0xB5/255,1],
     c4:[1,1,1],
     c5:[1,1,1],
   };
-  // Responsive freq: mobile (portrait) gets lower values
   function getFreq(){
-    const mobile = window.innerWidth < 768;
-    return {
-      fx: mobile ? 1.8 : 3.4,
-      fy: mobile ? 1.2 : 2.2,
-    };
+    const w = window.innerWidth;
+    if(w >= 1024) return { speed:1.13, fx:3.5, fy:2.2, amp:3.2, angle:6*Math.PI/180,  soft:0.01 };
+    if(w >= 768)  return { speed:0.96, fx:2.2, fy:1.9, amp:2.7, angle:-5*Math.PI/180, soft:0.1  };
+                  return { speed:0.96, fx:1.6, fy:2.5, amp:2.7, angle:-5*Math.PI/180, soft:0.1  };
   }
   function frame(ts){
     resize();
-    const {fx, fy} = getFreq();
+    const f = getFreq();
     gl.uniform1f(U.t,ts*.001); gl.uniform2f(U.res,W,H);
-    gl.uniform1f(U.speed,P.speed); gl.uniform1f(U.fx,fx);
-    gl.uniform1f(U.fy,fy);       gl.uniform1f(U.amp,P.amp);
-    gl.uniform1f(U.angle,P.angle); gl.uniform1f(U.soft,P.soft);
+    gl.uniform1f(U.speed,f.speed); gl.uniform1f(U.fx,f.fx);
+    gl.uniform1f(U.fy,f.fy);       gl.uniform1f(U.amp,f.amp);
+    gl.uniform1f(U.angle,f.angle); gl.uniform1f(U.soft,f.soft);
     gl.uniform1f(U.blend,P.blend); gl.uniform1f(U.seed,P.seed);
     gl.uniform3fv(U.c1,P.c1); gl.uniform3fv(U.c2,P.c2);
     gl.uniform3fv(U.c3,P.c3); gl.uniform3fv(U.c4,P.c4);

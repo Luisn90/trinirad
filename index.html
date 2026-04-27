@@ -141,7 +141,7 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
 }
 
 /* ── HERO ── */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.5rem 3rem;position:relative;background:#F0FAFF}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 1.5rem 3rem;position:relative;background:#FFFFFF}
 .hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;max-width:780px;width:100%;gap:0}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(106,13,145,0.18);background:rgba(106,13,145,0.04);padding:.4rem 1.2rem;border-radius:99px;font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--violet);margin-bottom:2rem}
 .hero-eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--red);animation:blink 2s ease-in-out infinite}
@@ -1278,13 +1278,13 @@ body { font-family:var(--font-body); color:var(--ink); background:var(--white); 
   };
   // TRINIRAD params — edit these to match your configurator output
   const P={
-    speed:0.96, fx:1.2, fy:2.2, amp:2.7,
+    speed:0.96, fx:3.4, fy:2.2, amp:2.7,
     angle:-5*Math.PI/180, soft:0.1, blend:1.0, seed:41,
-    c1:[0xDF/255,0x30/255,0xD9/255],  // #DF30D9
-    c2:[0x00/255,0x8F/255,0xCC/255],  // #008FCC
-    c3:[1,1,1],                        // #FFFFFF
-    c4:[0xFF/255,0xCA/255,0x0A/255],  // #FFCA0A
-    c5:[0xF0/255,0xFA/255,1],          // #F0FAFF base
+    c1:[1,1,1],                        // #FFFFFF
+    c2:[0xAD/255,0xE7/255,1],          // #ADE7FF
+    c3:[0x1A/255,0x90/255,1],          // #1A90FF
+    c4:[1,1,1],                        // #FFFFFF
+    c5:[1,1,1],                        // #FFFFFF base
   };
   function frame(ts){
     resize();

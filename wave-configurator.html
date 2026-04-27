@@ -103,6 +103,14 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min
 }
 .copy-btn:hover{opacity:.85}
 .copy-btn.copied{background:linear-gradient(135deg,#1A7A3A,#00C6CC)}
+.bp-tabs{display:flex;gap:.4rem;margin-bottom:.6rem}
+.bp-tab{flex:1;padding:.45rem .3rem;border-radius:7px;border:1.5px solid var(--border);
+  background:var(--input);color:var(--muted);font-family:'Poppins',sans-serif;
+  font-size:.65rem;font-weight:600;cursor:pointer;transition:all .2s}
+.bp-tab.active{border-color:var(--accent2);color:var(--accent2);background:rgba(0,198,204,0.08)}
+.bp-note{font-size:.62rem;color:var(--muted);line-height:1.4}
+#bp-badge{display:inline-block;font-size:.6rem;font-weight:700;padding:.1rem .5rem;
+  border-radius:99px;background:var(--accent2);color:#000;margin-left:.4rem;letter-spacing:.5px}
 
 /* CANVAS LABELS */
 .canvas-info{
@@ -155,17 +163,28 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min
       </div>
     </div>
 
+    <!-- BREAKPOINTS -->
+    <div class="section">
+      <div class="section-label">Breakpoint</div>
+      <div class="bp-tabs">
+        <button class="bp-tab active" data-bp="desktop" onclick="switchBP('desktop')">🖥 Desktop</button>
+        <button class="bp-tab" data-bp="tablet" onclick="switchBP('tablet')">📱 Tablet</button>
+        <button class="bp-tab" data-bp="mobile" onclick="switchBP('mobile')">📲 Mobile</button>
+      </div>
+      <div class="bp-note" id="bp-note">≥1024px · FreqX y FreqY independientes por dispositivo</div>
+    </div>
+
     <!-- SLIDERS -->
     <div class="section">
-      <div class="section-label">Wave Parameters</div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Speed</span><span class="slider-val" id="v-speed">0.84</span></div><input type="range" class="slider" id="s-speed" min="0" max="3" step="0.01" value="0.84"></div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Freq X</span><span class="slider-val" id="v-freqx">2.5</span></div><input type="range" class="slider" id="s-freqx" min="0.1" max="8" step="0.1" value="2.5"></div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Freq Y</span><span class="slider-val" id="v-freqy">6</span></div><input type="range" class="slider" id="s-freqy" min="0.1" max="12" step="0.1" value="6"></div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Amplitude</span><span class="slider-val" id="v-amp">3</span></div><input type="range" class="slider" id="s-amp" min="0.1" max="8" step="0.1" value="3"></div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Angle</span><span class="slider-val" id="v-angle">-54°</span></div><input type="range" class="slider" id="s-angle" min="-180" max="180" step="1" value="-54"></div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Softness</span><span class="slider-val" id="v-soft">1.67</span></div><input type="range" class="slider" id="s-soft" min="0.1" max="5" step="0.01" value="1.67"></div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Blend (fade)</span><span class="slider-val" id="v-blend">0.74</span></div><input type="range" class="slider" id="s-blend" min="0" max="1" step="0.01" value="0.74"></div>
-      <div class="slider-row"><div class="slider-header"><span class="slider-name">Seed</span><span class="slider-val" id="v-seed">27</span></div><input type="range" class="slider" id="s-seed" min="1" max="100" step="1" value="27"></div>
+      <div class="section-label">Wave Parameters <span id="bp-badge">Desktop</span></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Speed</span><span class="slider-val" id="v-speed">0.96</span></div><input type="range" class="slider" id="s-speed" min="0" max="3" step="0.01" value="0.96"></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Freq X</span><span class="slider-val" id="v-freqx">3.4</span></div><input type="range" class="slider" id="s-freqx" min="0.1" max="8" step="0.1" value="3.4"></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Freq Y</span><span class="slider-val" id="v-freqy">2.2</span></div><input type="range" class="slider" id="s-freqy" min="0.1" max="12" step="0.1" value="2.2"></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Amplitude</span><span class="slider-val" id="v-amp">2.7</span></div><input type="range" class="slider" id="s-amp" min="0.1" max="8" step="0.1" value="2.7"></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Angle</span><span class="slider-val" id="v-angle">-5°</span></div><input type="range" class="slider" id="s-angle" min="-180" max="180" step="1" value="-5"></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Softness</span><span class="slider-val" id="v-soft">0.1</span></div><input type="range" class="slider" id="s-soft" min="0.01" max="5" step="0.01" value="0.1"></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Blend (fade)</span><span class="slider-val" id="v-blend">1</span></div><input type="range" class="slider" id="s-blend" min="0" max="1" step="0.01" value="1"></div>
+      <div class="slider-row"><div class="slider-header"><span class="slider-name">Seed</span><span class="slider-val" id="v-seed">41</span></div><input type="range" class="slider" id="s-seed" min="1" max="100" step="1" value="41"></div>
     </div>
 
     <!-- CODE -->
@@ -289,6 +308,7 @@ function hexToRgb(hex){
 }
 
 function getParams(){
+  // always preview with current active BP slider values
   return {
     speed: parseFloat(document.getElementById('s-speed').value),
     fx:    parseFloat(document.getElementById('s-freqx').value),
@@ -328,6 +348,52 @@ function frame(ts){
 }
 requestAnimationFrame(frame);
 
+// ── BREAKPOINT STATE ──
+const BPS = {
+  desktop: { speed:0.96, fx:3.4, fy:2.2, amp:2.7, angle:-5, soft:0.1, blend:1, seed:41 },
+  tablet:  { speed:0.96, fx:2.2, fy:1.6, amp:2.7, angle:-5, soft:0.1, blend:1, seed:41 },
+  mobile:  { speed:0.96, fx:1.8, fy:1.2, amp:2.7, angle:-5, soft:0.1, blend:1, seed:41 },
+};
+const BP_LABELS = { desktop:'🖥 Desktop ≥1024px', tablet:'📱 Tablet 768–1023px', mobile:'📲 Mobile <768px' };
+let activeBP = 'desktop';
+
+function switchBP(bp){
+  // save current sliders to current BP
+  saveToBP(activeBP);
+  activeBP = bp;
+  // load new BP values into sliders
+  loadFromBP(bp);
+  document.querySelectorAll('.bp-tab').forEach(t => t.classList.toggle('active', t.dataset.bp === bp));
+  document.getElementById('bp-note').textContent = BP_LABELS[bp];
+  document.getElementById('bp-badge').textContent = bp.charAt(0).toUpperCase()+bp.slice(1);
+  updateCode();
+}
+
+function saveToBP(bp){
+  BPS[bp] = {
+    speed: parseFloat(document.getElementById('s-speed').value),
+    fx:    parseFloat(document.getElementById('s-freqx').value),
+    fy:    parseFloat(document.getElementById('s-freqy').value),
+    amp:   parseFloat(document.getElementById('s-amp').value),
+    angle: parseFloat(document.getElementById('s-angle').value),
+    soft:  parseFloat(document.getElementById('s-soft').value),
+    blend: parseFloat(document.getElementById('s-blend').value),
+    seed:  parseFloat(document.getElementById('s-seed').value),
+  };
+}
+
+function loadFromBP(bp){
+  const p = BPS[bp];
+  document.getElementById('s-speed').value = p.speed; document.getElementById('v-speed').textContent = p.speed;
+  document.getElementById('s-freqx').value = p.fx;    document.getElementById('v-freqx').textContent = p.fx;
+  document.getElementById('s-freqy').value = p.fy;    document.getElementById('v-freqy').textContent = p.fy;
+  document.getElementById('s-amp').value   = p.amp;   document.getElementById('v-amp').textContent   = p.amp;
+  document.getElementById('s-angle').value = p.angle; document.getElementById('v-angle').textContent = `${p.angle}°`;
+  document.getElementById('s-soft').value  = p.soft;  document.getElementById('v-soft').textContent  = p.soft;
+  document.getElementById('s-blend').value = p.blend; document.getElementById('v-blend').textContent = p.blend;
+  document.getElementById('s-seed').value  = p.seed;  document.getElementById('v-seed').textContent  = p.seed;
+}
+
 // ── CONTROLS ──
 const sliders = ['speed','freqx','freqy','amp','angle','soft','blend','seed'];
 const labels  = {angle: v => `${v}°`, speed: v=>v, freqx:v=>v, freqy:v=>v, amp:v=>v, soft:v=>v, blend:v=>v, seed:v=>v};
@@ -366,18 +432,27 @@ function updateCode(){
     blend:   document.getElementById('s-blend').value,
     seed:    document.getElementById('s-seed').value,
   };
+  saveToBP(activeBP);
+  const d = BPS.desktop, t = BPS.tablet, m = BPS.mobile;
   document.getElementById('code-output').textContent =
-`Colors:    ${p.color1}, ${p.color2}
-           ${p.color3}, ${p.color4}
-Base:      ${p.base}
-Speed:     ${p.speed}
-Freq X:    ${p.freqX}
-Freq Y:    ${p.freqY}
-Amplitude: ${p.amplitude}
-Angle:     ${p.angle}°
-Softness:  ${p.softness}
-Blend:     ${p.blend}
-Seed:      ${p.seed}`;
+`Colors:  ${p.color1}, ${p.color2}
+         ${p.color3}, ${p.color4}
+Base:    ${p.base}
+
+-- Desktop (≥1024px) --
+Speed: ${d.speed}  FreqX: ${d.fx}  FreqY: ${d.fy}
+Amp: ${d.amp}  Angle: ${d.angle}°
+Soft: ${d.soft}  Blend: ${d.blend}  Seed: ${d.seed}
+
+-- Tablet (768-1023px) --
+Speed: ${t.speed}  FreqX: ${t.fx}  FreqY: ${t.fy}
+Amp: ${t.amp}  Angle: ${t.angle}°
+Soft: ${t.soft}  Blend: ${t.blend}  Seed: ${t.seed}
+
+-- Mobile (<768px) --
+Speed: ${m.speed}  FreqX: ${m.fx}  FreqY: ${m.fy}
+Amp: ${m.amp}  Angle: ${m.angle}°
+Soft: ${m.soft}  Blend: ${m.blend}  Seed: ${m.seed}`;
 }
 updateCode();
 
@@ -391,6 +466,11 @@ const PRESETS = {
 
 function applyPreset(name){
   const p = PRESETS[name];
+  // Apply wave params to all breakpoints
+  BPS.desktop = { speed:p.speed, fx:p.fx,     fy:p.fy,     amp:p.amp, angle:p.angle, soft:p.soft, blend:p.blend, seed:p.seed };
+  BPS.tablet  = { speed:p.speed, fx:p.fx*.65, fy:p.fy*.65, amp:p.amp, angle:p.angle, soft:p.soft, blend:p.blend, seed:p.seed };
+  BPS.mobile  = { speed:p.speed, fx:p.fx*.5,  fy:p.fy*.5,  amp:p.amp, angle:p.angle, soft:p.soft, blend:p.blend, seed:p.seed };
+  loadFromBP(activeBP);
   document.getElementById('c1').value = p.c1;
   document.getElementById('c2').value = p.c2;
   document.getElementById('c3').value = p.c3;
